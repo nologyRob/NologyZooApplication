@@ -1,23 +1,34 @@
 package com.company;
 
 public class LoginScreen extends Screen {
-    private boolean isValid;
 
     public LoginScreen() {
         super(new String[]{"Login as Visitor", "Login as Staff", "Exit"});
-        isValid = false;
     }
 
-    public boolean loadScreen() {
-        printIndexedOptions();
+    public User runScreen() {
+        printOptions();
 
-        int inputOption = getIntegerInput();
+        int userChoice = getIntegerInput();
 
-        if (inputOption == options.length) {
-            return false;
+        if (userChoice == getOptions().length) {
+            printMessage("You have Quit");
+            return null;
+        } else if (userChoice == 2) {
+            printMessage("You have logged in as a Staff");
+            return null;
+        } else {
+            printMessage("Enter name");
+            String name = getStringInput();
+            return new Visitor(name);
         }
-
-
-        return true;
     }
+
+    public void printOptions() {
+        printMessage("Select an option:");
+        printIndexedOptions();
+        printMessage("Enter option:");
+    }
+
+
 }
