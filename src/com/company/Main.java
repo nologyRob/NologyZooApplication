@@ -2,11 +2,29 @@ package com.company;
 
 public class Main {
 
-
     public static void main(String[] args) {
-        LoginScreen currentScreen = new LoginScreen();
+        HomeScreen home = new HomeScreen();
 
-        currentScreen.loadScreen();
+
+        app:
+        while (true) {
+            Screen nextScreen;
+
+            int userSelection = home.getUserSelection();
+            switch (userSelection) {
+                case 1:
+                    nextScreen = new VisitorScreen();
+                    nextScreen.printIndexedOptions();
+                    break;
+                case 2:
+                    System.out.println("Login as Staff");
+                    break;
+                default:
+                    break app;
+            }
+
+
+        }
 
 
     }

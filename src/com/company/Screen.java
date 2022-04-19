@@ -3,14 +3,19 @@ package com.company;
 import java.util.Scanner;
 
 abstract public class Screen {
-    Scanner scanner;
-    String[] options;
+    private Scanner scanner;
+    private String[] options;
 
     public Screen(String[] options) {
         this.scanner = new Scanner(System.in);
         this.options = options;
     }
 
+    public String[] getOptions() {
+        return options;
+    }
+
+    // SHOW YOU CAN CALL METHODS IN OTHER METHODS
     public void printMessage(String message) {
         System.out.println(message);
     }
@@ -39,13 +44,12 @@ abstract public class Screen {
             if (hasNextInt) {
                 int userInput = scanner.nextInt();
 
-                if (userInput >= 0 && userInput <= options.length) {
+                if (userInput > 0 && userInput <= options.length) {
                     input = userInput;
                     isGettingInput = false;
                 } else {
                     printMessage("Enter a number between 1 - " + options.length);
                 }
-
 
             } else {
                 printMessage("Unable to understand input, try again");
@@ -54,5 +58,11 @@ abstract public class Screen {
         }
 
         return input;
+    }
+
+    public String getStringInput() {
+        // VALIDATE LIKE ^^ ABOVE
+        String value = scanner.next();
+        return value;
     }
 }
