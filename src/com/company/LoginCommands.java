@@ -1,10 +1,10 @@
 package com.company;
 
-public class LoginScreen extends Screen {
+public class LoginCommands extends Commands {
 
     private boolean isLoggedIn;
 
-    public LoginScreen() {
+    public LoginCommands() {
         super(new String[]{"Create a new Visitor", "Login as Visitor", "Login as Staff", "Exit"});
         isLoggedIn = false;
     }

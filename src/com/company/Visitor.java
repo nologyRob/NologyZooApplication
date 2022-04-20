@@ -8,5 +8,4 @@ public class Visitor extends User {
         this.animalTokens = 10;
     }
 
-
 }

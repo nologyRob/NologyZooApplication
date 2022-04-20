@@ -2,17 +2,17 @@ package com.company;
 
 import java.util.Scanner;
 
-abstract public class Screen {
-    private Scanner scanner;
-    private String[] options;
+abstract public class Commands {
+    private final Scanner scanner;
+    private final String[] baseOptions;
 
-    public Screen(String[] options) {
+    public Commands(String[] baseOptions) {
         this.scanner = new Scanner(System.in);
-        this.options = options;
+        this.baseOptions = baseOptions;
     }
 
-    public String[] getOptions() {
-        return options;
+    public String[] getBaseOptions() {
+        return baseOptions;
     }
 
     // SHOW YOU CAN CALL METHODS IN OTHER METHODS
@@ -22,8 +22,8 @@ abstract public class Screen {
 
     // LOOPING
     public void printIndexedOptions() {
-        for (int i = 0; i < options.length; i++) {
-            printMessage((i + 1) + ":" + options[i]);
+        for (int i = 0; i < baseOptions.length; i++) {
+            printMessage((i + 1) + ":" + baseOptions[i]);
         }
     }
 
@@ -44,11 +44,11 @@ abstract public class Screen {
             if (hasNextInt) {
                 int userInput = scanner.nextInt();
 
-                if (userInput > 0 && userInput <= options.length) {
+                if (userInput > 0 && userInput <= baseOptions.length) {
                     input = userInput;
                     isGettingInput = false;
                 } else {
-                    printMessage("Enter a number between 1 - " + options.length);
+                    printMessage("Enter a number between 1 - " + baseOptions.length);
                 }
 
             } else {
@@ -65,6 +65,9 @@ abstract public class Screen {
         String value = scanner.next();
         return value;
     }
+
+    // NO IMPLEMENTATION
     public abstract void printOptions();
+
     public abstract int getUserSelection();
 }

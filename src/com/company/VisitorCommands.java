@@ -2,17 +2,17 @@ package com.company;
 
 import java.util.ArrayList;
 
-public class VisitorScreen extends Screen {
+public class VisitorCommands extends Commands {
 
     private final boolean isStaff;
 
-    public VisitorScreen(String[] options, boolean isStaff) {
+    public VisitorCommands(String[] options) {
         super(options);
-        this.isStaff = isStaff;
+        this.isStaff = false;
     }
 
-    public void printAnimals(ArrayList<Animal> animals) {
-        for (Animal animal : animals) {
+    public <T extends Animal> void printAnimals(ArrayList<T> animals) {
+        for (T animal : animals) {
             printMessage(animal.getName());
         }
     }
