@@ -65,4 +65,6 @@ abstract public class Screen {
         String value = scanner.next();
         return value;
     }
+    public abstract void printOptions();
+    public abstract int getUserSelection();
 }
