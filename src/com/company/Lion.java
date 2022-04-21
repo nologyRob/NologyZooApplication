@@ -3,6 +3,6 @@ package com.company;
 public class Lion extends Animal {
 
     public Lion(String name) {
-        super(name);
+        super(name, false);
     }
 }

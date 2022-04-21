@@ -2,7 +2,7 @@ package com.company;
 
 // TODO
 // ANIMAL SCREEN? View animal
-// Visitor - Feed animal, Pet animal + Increment animals.
+
 // ZooKeeper -
 // PEN SCREEN?
 // Visitor - View Pen Stats, Feed all, Gain Pen Badge?
@@ -12,21 +12,8 @@ public class Main {
 
     public static void main(String[] args) {
         LoginCommands login = new LoginCommands();
-        User currentUser = null;
-
-        while (!login.isLoggedIn()) {
-            login.printOptions();
-            int userSelection = login.getUserSelection();
-            if (userSelection == 1) {
-                currentUser = new Visitor(login.createVisitor());
-                login.setLoggedIn(true);
-                // MAIN CREATES USER -> GIVES IT ZOO
-            } else if (userSelection == 4) {
-                break;
-            } else {
-                System.out.println("Another option was pressed - Add to this");
-            }
-        }
+        login.runCommands();
+        User currentUser = login.getCurrentUser();
 
         if (currentUser == null) {
             System.out.println("Quitting");
@@ -37,20 +24,18 @@ public class Main {
 
         boolean isRunning = true;
 
-        while (isRunning) {
-            // CURRENTLY VISITOR OPTIONS - ARRAY OF SCREENS?
-            // SIMPLIFY TO HOME SCREEN?
-            VisitorCommands visitorScreen = new VisitorCommands();
+        VisitorCommands visitorCommands = new VisitorCommands(zoo.getAnimals());
+        PenCommands penCommands = new PenCommands(zoo.getPens());
+        Commands currentScreen = visitorCommands;
 
-            int userSelection = visitorScreen.getUserSelection();
+        while (isRunning) {
+
+            int userSelection = currentScreen.runCommands();
 
             if (userSelection == 1) {
-                visitorScreen.printAnimals(zoo.getAnimals());
-
+                currentScreen = visitorCommands;
             } else if (userSelection == 2) {
-                zoo.getPens().forEach(pen -> visitorScreen.printMessage(pen.getName()));
-
-
+                currentScreen = penCommands;
             } else {
                 System.out.println("Quiting");
                 isRunning = false;
