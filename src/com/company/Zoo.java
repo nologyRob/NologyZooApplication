@@ -46,5 +46,9 @@ public class Zoo {
         animals.add(animal);
     }
 
+    public void removeAnimal(Animal animal) {
+        animals.remove(animal);
+    }
+
 
 }

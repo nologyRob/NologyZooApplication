@@ -6,6 +6,7 @@ import java.util.Objects;
 public class Pen<T extends Animal> {
     private final ArrayList<T> animalsInPen;
     private final String name;
+    private int cleanliness;
 
     public Pen(String name) {
         this.name = name;
@@ -40,5 +41,11 @@ public class Pen<T extends Animal> {
         return null;
     }
 
+    public void setCleanliness() {
+        this.cleanliness = cleanliness+=5;
+    }
 
+    public int getCleanliness() {
+        return cleanliness;
+    }
 }
