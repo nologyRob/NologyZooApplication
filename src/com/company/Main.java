@@ -18,9 +18,10 @@ public class Main {
             login.printOptions();
             int userSelection = login.getUserSelection();
             if (userSelection == 1) {
-                currentUser = login.createVisitor();
+                currentUser = new Visitor(login.createVisitor());
                 login.setLoggedIn(true);
-            } else if (userSelection == login.getBaseOptions().length) {
+                // MAIN CREATES USER -> GIVES IT ZOO
+            } else if (userSelection == 4) {
                 break;
             } else {
                 System.out.println("Another option was pressed - Add to this");
@@ -39,7 +40,7 @@ public class Main {
         while (isRunning) {
             // CURRENTLY VISITOR OPTIONS - ARRAY OF SCREENS?
             // SIMPLIFY TO HOME SCREEN?
-            VisitorCommands visitorScreen = new VisitorCommands(new String[]{"Display animals", "Display pens", "Exit"});
+            VisitorCommands visitorScreen = new VisitorCommands();
 
             int userSelection = visitorScreen.getUserSelection();
 

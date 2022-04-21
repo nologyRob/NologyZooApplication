@@ -19,27 +19,31 @@ public class Zookeeper extends User {
         System.out.println("Animal " + animal + " is now removed");
     }
 
-    private void addAnimal(String name, String type, Zoo zoo) {
+    private void addAnimal(String name, String type, Zoo zoo, Pen pen) {
+        System.out.println("You have chosen to add the animal type " + type + " and the name of " + name);
         switch (type.toLowerCase(Locale.ROOT)){
             case "lion":
-                // animal creator here?
+                Lion lion = new Lion(name + zoo.getAnimals().size());
+                pen.addAnimalToPen(lion);
                 break;
             case "zebra":
-                // animal creator here?
+                Zebra zebra = new Zebra(name + zoo.getAnimals().size());
+                pen.addAnimalToPen(zebra);
                 break;
-            case "tiger":
-                // animal creator here?
+            case "crocodile":
+                Crocodile crocodile = new Crocodile(name + zoo.getAnimals().size());
+                pen.addAnimalToPen(crocodile);
                 break;
         }
-
-        System.out.println("You have chosen to add the animal type " + type + " and the name of ");
-        zoo.addAnimal(animal);
-        System.out.println("Animal " + animal + " is now added");
+        System.out.println("Animal " + name + " is now added");
     }
 
-    private void healAnimal(Animal animal, Zoo zoo) {
-        System.out.println("You have chosen to improve the health of the animal " + animal);
-        zoo.getAnimals().remove(animal);
-        System.out.println("You have removed the animal " + animal);
+    private void removeAnimal(String animalName, Zoo zoo) {
+        System.out.println("You have chosen to improve the health of the animal " + animalName);
+        zoo.getAnimals().forEach((animal) -> {
+            if (animal.getName().equals(animalName)) {
+                zoo.removeAnimal(animal);
+            }
+        });
     }
 }
