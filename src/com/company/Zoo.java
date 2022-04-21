@@ -3,29 +3,20 @@ package com.company;
 import java.util.ArrayList;
 
 // TODO
-// OVERVIEW OF THE ZOO METHOD
-// LOG IN ZOO KEEPER
 // HASH SET & HASH MAP
-// - ANIMAL TYPE : ANIMALS
+// ANIMAL TYPE : ANIMALS
+// PEN :
 // CREATE A LOOKUP MAP
-// - SEARCHING ANIMALS
-// ADD VISITORS IN ZOO FACTORY
+// LIST OF PENS -> PEN KNOW ANIMALS
+// LIST OF ALL ANIMALS
+// HASH SETS FOR UNIQUENESS WHEN ZOO-KEEPER ADDS IT
 
-public class Zoo{
+public class Zoo {
 
-    private final ArrayList<Animal> animals;
-    private User currentUser;
-    private ArrayList<Visitor> visitors;
-    private ArrayList<Zookeeper> zookeepers;
-//    private ArrayList<ZooKeeper> zooKeepers;
+    private ArrayList<Animal> animals;
 
     public Zoo() {
-        this.currentUser = null;
         this.animals = new ArrayList<>();
-        this.visitors = new ArrayList<>();
-        this.zookeepers = new ArrayList<>();
-        visitors.add(new Visitor("charlie", "test"));
-        zookeepers.add(new Zookeeper("rob", "test"));
         ZooFactory.populateZoo(this);
     }
 
@@ -33,53 +24,13 @@ public class Zoo{
         return animals;
     }
 
-    public void addAnimal(Animal animal) {
+    public void setAnimals(ArrayList<Animal> animals) {
+        this.animals = animals;
+    }
 
+    public void addAnimal(Animal animal) {
         animals.add(animal);
     }
 
-    public User getCurrentUser() {
-        return currentUser;
-    }
 
-    public void setCurrentUser(User currentUser) {
-        this.currentUser = currentUser;
-    }
-
-    public void addVisitor(Visitor visitor) {
-        visitors.add(visitor);
-    }
-
-    public void createVisitor(String name, String password) {
-        Visitor visitor = new Visitor(name, password);
-        addVisitor(visitor);
-        setCurrentUser(visitor);
-    }
-
-    public void logOut() {
-        setCurrentUser(null);
-    }
-
-    public boolean logInVisitor(String name, String password) {
-        for (Visitor visitor : visitors) {
-            if (visitor.authenticate(name, password)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-    public boolean logInZookeeper(String name, String password) {
-        for (Zookeeper zookeeper : zookeepers) {
-            if (zookeeper.authenticate(name, password)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    public void removeAnimal(Animal animal) {
-        animals.remove(animal);
-    }
 }

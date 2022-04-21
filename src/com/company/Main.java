@@ -4,49 +4,45 @@ package com.company;
 // ANIMAL SCREEN? View animal
 
 // ZooKeeper -
+// PEN SCREEN?
 // Visitor - View Pen Stats, Feed all, Gain Pen Badge?
 // ZooKeeper - View Pen Stats Feed all, Add / Remove animal
 
 public class Main {
 
     public static void main(String[] args) {
+        LoginCommands login = new LoginCommands();
+        login.runCommands();
+        User currentUser = login.getCurrentUser();
+
+        if (currentUser == null) {
+            System.out.println("Quitting");
+            return;
+        }
+
         Zoo zoo = new Zoo();
 
-        LoginCommands loginCommands = new LoginCommands(zoo);
-        VisitorCommands visitorCommands = new VisitorCommands(zoo);
-        AnimalCommands animalCommands = new AnimalCommands(zoo);
-        ZookeeperCommands zookeeperCommands = new ZookeeperCommands(zoo);
-
-        Commands currentScreen = loginCommands;
         boolean isRunning = true;
+
+        VisitorCommands visitorCommands = new VisitorCommands(zoo.getAnimals());
+        AnimalCommands animalCommands = new AnimalCommands();
+        Commands currentScreen = visitorCommands;
 
         while (isRunning) {
 
-            currentScreen.runCommands();
+            int userSelection = currentScreen.runCommands();
 
-            switch (currentScreen.getNextCommands()) {
-                case Login:
-                    currentScreen = loginCommands;
-                    break;
-                case Visitor:
-                    currentScreen = visitorCommands;
-                    break;
-                case Animal:
-                    currentScreen = animalCommands;
-                    break;
-                case ZooKeeper:
-                    currentScreen = zookeeperCommands;
-                    break;
-                default:
-                    System.out.println("Quiting");
-                    isRunning = false;
-                    break;
+            if (userSelection == 1) {
+                currentScreen = visitorCommands;
+            } else if (userSelection == 2) {
+                currentScreen = animalCommands;
+            } else {
+                System.out.println("Quiting");
+                isRunning = false;
             }
 
         }
 
+
     }
-
-
-
 }
