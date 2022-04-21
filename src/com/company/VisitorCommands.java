@@ -4,21 +4,23 @@ import java.util.ArrayList;
 
 public class VisitorCommands extends Commands {
 
-    private final boolean isStaff;
+    private final ArrayList<Animal> animals;
+    private boolean isActive;
 
-    public VisitorCommands() {
-        super(new String[]{"Display animals", "Display pens", "Exit"});
-        this.isStaff = false;
+    public VisitorCommands(ArrayList<Animal> animals) {
+        super(new String[]{"See animal information", "Visit Pen", "Edit Information", "Exit"});
+        this.isActive = true;
+        this.animals = animals;
     }
 
-    public <T extends Animal> void printAnimals(ArrayList<T> animals) {
-        for (T animal : animals) {
-            printMessage(animal.getName());
+    public void printAnimals() {
+        for (Animal animal : animals) {
+            printMessage(animal.getInfo());
         }
     }
 
     @Override
-    public void printOptions() {
+    public void printCommands() {
         printMessage("Select an option:");
         printIndexedOptions();
         printMessage("Enter option:");
@@ -26,8 +28,26 @@ public class VisitorCommands extends Commands {
 
     @Override
     public int getUserSelection() {
-        printOptions();
-        return getIntegerInput();
+        return getIntegerInput(getCommands().length);
+    }
+
+    @Override
+    public int runCommands() {
+        int userSelection = -1;
+
+        while (isActive) {
+            printCommands();
+
+            userSelection = getUserSelection();
+
+            if (userSelection == 1) {
+                printAnimals();
+            } else {
+                isActive = false;
+            }
+        }
+
+        return userSelection;
     }
 
 

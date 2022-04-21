@@ -4,15 +4,15 @@ import java.util.Scanner;
 
 abstract public class Commands {
     private final Scanner scanner;
-    private final String[] baseOptions;
+    private final String[] commands;
 
-    public Commands(String[] baseOptions) {
+    public Commands(String[] commands) {
         this.scanner = new Scanner(System.in);
-        this.baseOptions = baseOptions;
+        this.commands = commands;
     }
 
-    public String[] getBaseOptions() {
-        return baseOptions;
+    public String[] getCommands() {
+        return commands;
     }
 
     // SHOW YOU CAN CALL METHODS IN OTHER METHODS
@@ -22,8 +22,8 @@ abstract public class Commands {
 
     // LOOPING
     public void printIndexedOptions() {
-        for (int i = 0; i < baseOptions.length; i++) {
-            printMessage((i + 1) + ":" + baseOptions[i]);
+        for (int i = 0; i < commands.length; i++) {
+            printMessage((i + 1) + ":" + commands[i]);
         }
     }
 
@@ -34,7 +34,7 @@ abstract public class Commands {
         }
     }
 
-    public int getIntegerInput() {
+    public int getIntegerInput(int limit) {
         boolean isGettingInput = true;
         int input = 0;
 
@@ -44,11 +44,11 @@ abstract public class Commands {
             if (hasNextInt) {
                 int userInput = scanner.nextInt();
 
-                if (userInput > 0 && userInput <= baseOptions.length) {
+                if (userInput > 0 && userInput <= limit) {
                     input = userInput;
                     isGettingInput = false;
                 } else {
-                    printMessage("Enter a number between 1 - " + baseOptions.length);
+                    printMessage("Enter a number between 1 - " + limit);
                 }
 
             } else {
@@ -67,7 +67,9 @@ abstract public class Commands {
     }
 
     // NO IMPLEMENTATION
-    public abstract void printOptions();
+    public abstract void printCommands();
 
     public abstract int getUserSelection();
+
+    public abstract int runCommands();
 }
