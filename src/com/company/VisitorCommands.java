@@ -6,8 +6,8 @@ public class VisitorCommands extends Commands {
 
     private final boolean isStaff;
 
-    public VisitorCommands(String[] options) {
-        super(options);
+    public VisitorCommands() {
+        super(new String[]{"Display animals", "Display pens", "Exit"});
         this.isStaff = false;
     }
 
