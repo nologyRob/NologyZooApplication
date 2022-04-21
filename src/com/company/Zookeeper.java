@@ -24,15 +24,15 @@ public class Zookeeper extends User {
         switch (type.toLowerCase(Locale.ROOT)){
             case "lion":
                 Lion lion = new Lion(name + zoo.getAnimals().size());
-                pen.addAnimalToPen(lion);
+//                pen.addAnimalToPen(lion);
                 break;
             case "zebra":
                 Llama zebra = new Llama(name + zoo.getAnimals().size());
-                pen.addAnimalToPen(zebra);
+//                pen.addAnimalToPen(zebra);
                 break;
             case "crocodile":
                 Crocodile crocodile = new Crocodile(name + zoo.getAnimals().size());
-                pen.addAnimalToPen(crocodile);
+//                pen.addAnimalToPen(crocodile);
                 break;
         }
         System.out.println("Animal " + name + " is now added");

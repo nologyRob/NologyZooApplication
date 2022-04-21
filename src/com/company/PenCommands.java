@@ -67,6 +67,7 @@ public class PenCommands extends Commands {
         printMessage("Select a Pen");
         int userChoice = getPenSelection();
         printSubCommands();
+
         // TODO
         // GET PEN
         // INTERACT WITH IT
