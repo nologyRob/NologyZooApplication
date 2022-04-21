@@ -27,7 +27,7 @@ public class Zookeeper extends User {
                 pen.addAnimalToPen(lion);
                 break;
             case "zebra":
-                Zebra zebra = new Zebra(name + zoo.getAnimals().size());
+                Llama zebra = new Llama(name + zoo.getAnimals().size());
                 pen.addAnimalToPen(zebra);
                 break;
             case "crocodile":
