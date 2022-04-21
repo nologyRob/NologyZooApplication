@@ -19,7 +19,7 @@ public class Zoo {
     public Zoo() {
         this.animals = new ArrayList<>();
         this.pens = new ArrayList<>();
-        AnimalFactory.populateZoo(this);
+        ZooFactory.populateZoo(this);
     }
 
     public ArrayList<Animal> getAnimals() {

@@ -17,10 +17,9 @@ public class LoginCommands extends Commands {
         isLoggedIn = loggedIn;
     }
 
-    public User createVisitor() {
+    public String createVisitor() {
         printMessage("Enter Details below");
-        String name = getStringInput();
-        return new Visitor(name);
+        return getStringInput();
     }
 
     @Override
