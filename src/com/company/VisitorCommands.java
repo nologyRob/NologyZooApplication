@@ -8,7 +8,7 @@ public class VisitorCommands extends Commands {
     private boolean isActive;
 
     public VisitorCommands(ArrayList<Animal> animals) {
-        super(new String[]{"See animal information", "Visit Pen", "Edit Information", "Exit"});
+        super(new String[]{"See animal information", "Visit Animal", "Edit Information", "Exit"});
         this.isActive = true;
         this.animals = animals;
     }

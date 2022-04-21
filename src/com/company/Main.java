@@ -25,7 +25,7 @@ public class Main {
         boolean isRunning = true;
 
         VisitorCommands visitorCommands = new VisitorCommands(zoo.getAnimals());
-        PenCommands penCommands = new PenCommands(zoo.getPens());
+        AnimalCommands animalCommands = new AnimalCommands();
         Commands currentScreen = visitorCommands;
 
         while (isRunning) {
@@ -35,7 +35,7 @@ public class Main {
             if (userSelection == 1) {
                 currentScreen = visitorCommands;
             } else if (userSelection == 2) {
-                currentScreen = penCommands;
+                currentScreen = animalCommands;
             } else {
                 System.out.println("Quiting");
                 isRunning = false;
