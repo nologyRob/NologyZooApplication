@@ -7,7 +7,7 @@ public class Zookeeper extends User {
         super(name, isStaff=true);
     }
 
-    private void cleanPen(Pen pen) {
+    private void cleanPen(Pen<Animal> pen) {
         System.out.println("Cleanliness was " + pen.getCleanliness());
         pen.setCleanliness();
         System.out.println("Cleanliness is now " + pen.getCleanliness());
@@ -25,6 +25,7 @@ public class Zookeeper extends User {
             case "lion":
                 Lion lion = new Lion(name + zoo.getAnimals().size());
 //                pen.addAnimalToPen(lion);
+                zoo.addAnimal(lion);
                 break;
             case "zebra":
                 Llama zebra = new Llama(name + zoo.getAnimals().size());

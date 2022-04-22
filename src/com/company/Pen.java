@@ -16,10 +16,10 @@ public class Pen<T extends Animal> {
         this.animalsInPen = new ArrayList<T>();
     }
 
-    public Pen(ArrayList<T> animalsInPen, String name) {
-        this.animalsInPen = animalsInPen;
-        this.name = name;
-    }
+//    public Pen(ArrayList<T> animalsInPen, String name) {
+//        this.animalsInPen = animalsInPen;
+//        this.name = name;
+//    }
 
     public String getName() {
         return name;

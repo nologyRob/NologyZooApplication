@@ -9,6 +9,8 @@ public class Visitor extends User {
     }
 
     public void giveToken(Zoo zoo, String animalName, int tokenAmount){
+        // Opportunity to learn about streams later in the code-along
+        // Initially forEach
         zoo.getAnimals().forEach((animal) -> {
             if (animal.getName().equals(animalName)) {
                 animal.setPopularity(animal.getPopularity()+tokenAmount);
