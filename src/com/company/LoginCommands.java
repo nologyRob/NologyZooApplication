@@ -1,63 +1,53 @@
 package com.company;
 
+
+// TODO
+// LOG IN AS VISITOR
+// LOG IN AS ZOO KEEPER
+
 public class LoginCommands extends Commands {
 
-    private boolean isLoggedIn;
-    private User currentUser;
-
-    public LoginCommands() {
-        super(new String[]{"Create a new Visitor", "Login as Visitor", "Login as Staff", "Exit"});
-        isLoggedIn = false;
-        currentUser = null;
+    public LoginCommands(Zoo zoo) {
+        super(new String[]{"Create a new Visitor", "Login as Visitor", "Login as Zoo Keeper", "Exit"}, "login", zoo);
     }
 
-    public User getCurrentUser() {
-        return currentUser;
-    }
-
-    public boolean isLoggedIn() {
-        return isLoggedIn;
-    }
-
-    public void setLoggedIn(boolean loggedIn) {
-        isLoggedIn = loggedIn;
-    }
-
-    public String createVisitor() {
+    public void createVisitor() {
         printMessage("Enter Details below");
-        return getStringInput();
+        String name = getStringInput();
+        Visitor visitor = new Visitor(name);
+        getZoo().addVisitor(visitor);
+        getZoo().setCurrentUser(visitor);
     }
-
 
     @Override
     public void printCommands() {
         printMessage("Welcome to the Zoo");
-        printIndexedOptions();
+        printIndexedCommands();
         printMessage("Enter Selection Below:");
     }
 
     @Override
-    public int getUserSelection() {
-        return getIntegerInput(getCommands().length);
-    }
+    public void runCommands() {
+        boolean isActive = true;
 
-    @Override
-    public int runCommands() {
-        while (!isLoggedIn()) {
+        while (isActive) {
             printCommands();
 
-            int userSelection = getUserSelection();
+            int userSelection = getIntegerInput();
 
             if (userSelection == 1) {
-                currentUser = new Visitor(createVisitor());
-                setLoggedIn(true);
-            } else if (userSelection == 4) {
-                break;
+                createVisitor();
+                setNextCommands(CommandNames.Visitor);
+                isActive = false;
+            } else if (userSelection == 2) {
+                printMessage("How do you login?");
+            } else if (userSelection == 3) {
+                printMessage("Staff not set yet");
             } else {
-                System.out.println("Another option was pressed - Add to this");
+                setNextCommands(CommandNames.Exit);
+                isActive = false;
             }
         }
 
-        return -1;
     }
 }
