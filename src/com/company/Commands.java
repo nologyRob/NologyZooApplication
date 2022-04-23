@@ -1,6 +1,5 @@
 package com.company;
 
-import java.util.Locale;
 import java.util.Scanner;
 
 abstract public class Commands {
@@ -35,10 +34,10 @@ abstract public class Commands {
     }
 
     public int getIntegerInput() {
-        boolean isActive = true;
+        boolean isGettingInput = true;
         int input = 0;
 
-        while (isActive) {
+        while (isGettingInput) {
             boolean hasNextInt = scanner.hasNextInt();
 
             if (hasNextInt) {
@@ -46,7 +45,7 @@ abstract public class Commands {
 
                 if (userInput > 0 && userInput <= commands.length) {
                     input = userInput;
-                    isActive = false;
+                    isGettingInput = false;
                 } else {
                     printMessage("Enter a number between 1 - " + commands.length);
                 }
@@ -56,8 +55,7 @@ abstract public class Commands {
                 scanner.nextLine();
             }
         }
-        // NEED THIS TO STOP IT SKIPPING WHEN YOU USE THE GET STRING INPUT
-        scanner.nextLine();
+
         return input;
     }
 
@@ -82,25 +80,9 @@ abstract public class Commands {
 
 
     protected String getStringInput() {
-        boolean isActive = true;
-
-        String input = "";
-
-        while (isActive) {
-            String userInput = scanner.nextLine();
-
-            String userInputClean = userInput.trim().toLowerCase(Locale.ROOT);
-
-            if (!userInputClean.equals("")) {
-                input = userInputClean;
-                isActive = false;
-            } else {
-                printMessage("Unable to understand input, try again");
-            }
-
-        }
-
-        return input;
+        // VALIDATE LIKE ^^ ABOVE USING STRING METHODS?
+        String value = scanner.next();
+        return value;
     }
 
     // NO IMPLEMENTATION

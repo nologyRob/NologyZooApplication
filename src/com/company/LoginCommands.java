@@ -2,6 +2,7 @@ package com.company;
 
 
 // TODO
+// LOG IN AS VISITOR
 // LOG IN AS ZOO KEEPER
 
 public class LoginCommands extends Commands {
@@ -11,68 +12,11 @@ public class LoginCommands extends Commands {
     }
 
     public void createVisitor() {
-        String name = getCredentials("Enter Name below:");
-        String password = getCredentials("Enter Password below:");
-        getZoo().createVisitor(name, password);
-    }
-
-    public String getCredentials(String message) {
-        printMessage(message);
-        return getStringInput();
-    }
-
-    public boolean loginVisitor() {
-        boolean isActive = true;
-        boolean isLoggedIn = false;
-
-        while (isActive) {
-            String name = getCredentials("Enter Name below:");
-            String password = getCredentials("Enter Password below:");
-            isLoggedIn = getZoo().logInVisitor(name, password);
-
-            if (isLoggedIn) {
-                isActive = false;
-            } else {
-                printMessage("Unable to authenticate");
-
-                printIndexedCommands(new String[]{"Retry", "Go Back"});
-
-                int userSelection = getIntegerInput();
-
-                if (userSelection == 2) {
-                    isActive = false;
-                }
-            }
-
-        }
-        return isLoggedIn;
-    }
-
-    public boolean loginZookeeper() {
-        boolean isActive = true;
-        boolean isLoggedIn = false;
-
-        while (isActive) {
-            String name = getCredentials("Enter Name below:");
-            String password = getCredentials("Enter Password below:");
-            isLoggedIn = getZoo().logInZookeeper(name, password);
-
-            if (isLoggedIn) {
-                isActive = false;
-            } else {
-                printMessage("Unable to authenticate");
-
-                printIndexedCommands(new String[]{"Retry", "Go Back"});
-
-                int userSelection = getIntegerInput();
-
-                if (userSelection == 2) {
-                    isActive = false;
-                }
-            }
-
-        }
-        return isLoggedIn;
+        printMessage("Enter Details below");
+        String name = getStringInput();
+        Visitor visitor = new Visitor(name);
+        getZoo().addVisitor(visitor);
+        getZoo().setCurrentUser(visitor);
     }
 
     @Override
@@ -96,17 +40,9 @@ public class LoginCommands extends Commands {
                 setNextCommands(CommandNames.Visitor);
                 isActive = false;
             } else if (userSelection == 2) {
-                boolean isLoggedIn = loginVisitor();
-                if (isLoggedIn) {
-                    setNextCommands(CommandNames.Visitor);
-                    isActive = false;
-                }
+                printMessage("How do you login?");
             } else if (userSelection == 3) {
-                boolean isLoggedIn = loginZookeeper();
-                if (isLoggedIn) {
-                    setNextCommands(CommandNames.ZooKeeper);
-                    isActive = false;
-                }
+                printMessage("Staff not set yet");
             } else {
                 setNextCommands(CommandNames.Exit);
                 isActive = false;
