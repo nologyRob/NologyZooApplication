@@ -2,22 +2,18 @@ package com.company;
 
 public class AnimalCommands extends Commands {
 
-    public AnimalCommands() {
-        super(new String[]{"Do something", "Visit Animal", "Edit Information", "Exit"});
+    public AnimalCommands(Zoo zoo) {
+        super(new String[]{"Do something", "Visit Animal", "Edit Information", "Exit"}, "Animal", zoo);
     }
 
     @Override
     public void printCommands() {
-
+        printMessage("Welcome to the Animal commands");
+        printIndexedCommands();
     }
 
     @Override
-    public int getUserSelection() {
-        return 0;
-    }
-
-    @Override
-    public int runCommands() {
-        return 0;
+    public void runCommands() {
+        printCommands();
     }
 }

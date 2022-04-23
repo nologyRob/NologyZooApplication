@@ -5,36 +5,35 @@ import java.util.Scanner;
 abstract public class Commands {
     private final Scanner scanner;
     private final String[] commands;
+    private final String name;
+    private final Zoo zoo;
+    private CommandNames nextCommands;
 
-    public Commands(String[] commands) {
+    public Commands(String[] commands, String name, Zoo zoo) {
         this.scanner = new Scanner(System.in);
+        this.nextCommands = CommandNames.Exit;
         this.commands = commands;
+        this.name = name;
+        this.zoo = zoo;
     }
 
-    public String[] getCommands() {
-        return commands;
+    public Zoo getZoo() {
+        return zoo;
     }
 
-    // SHOW YOU CAN CALL METHODS IN OTHER METHODS
-    public void printMessage(String message) {
-        System.out.println(message);
+    public String getName() {
+        return name;
     }
 
-    // LOOPING
-    public void printIndexedOptions() {
-        for (int i = 0; i < commands.length; i++) {
-            printMessage((i + 1) + ":" + commands[i]);
-        }
+    public CommandNames getNextCommands() {
+        return nextCommands;
     }
 
-    // METHOD OVERLOADING +
-    public void printIndexedOptions(String[] options) {
-        for (int i = 0; i < options.length; i++) {
-            printMessage((i + 1) + ":" + options[i]);
-        }
+    public void setNextCommands(CommandNames nextCommands) {
+        this.nextCommands = nextCommands;
     }
 
-    public int getIntegerInput(int limit) {
+    public int getIntegerInput() {
         boolean isGettingInput = true;
         int input = 0;
 
@@ -44,11 +43,11 @@ abstract public class Commands {
             if (hasNextInt) {
                 int userInput = scanner.nextInt();
 
-                if (userInput > 0 && userInput <= limit) {
+                if (userInput > 0 && userInput <= commands.length) {
                     input = userInput;
                     isGettingInput = false;
                 } else {
-                    printMessage("Enter a number between 1 - " + limit);
+                    printMessage("Enter a number between 1 - " + commands.length);
                 }
 
             } else {
@@ -60,8 +59,28 @@ abstract public class Commands {
         return input;
     }
 
-    public String getStringInput() {
-        // VALIDATE LIKE ^^ ABOVE
+    // SHOW YOU CAN CALL METHODS IN OTHER METHODS
+    protected void printMessage(String message) {
+        System.out.println(message);
+    }
+
+    // LOOPING
+    protected void printIndexedCommands() {
+        for (int i = 0; i < commands.length; i++) {
+            printMessage((i + 1) + ":" + commands[i]);
+        }
+    }
+
+    // METHOD OVERLOADING +
+    protected void printIndexedCommands(String[] commands) {
+        for (int i = 0; i < commands.length; i++) {
+            printMessage((i + 1) + ":" + commands[i]);
+        }
+    }
+
+
+    protected String getStringInput() {
+        // VALIDATE LIKE ^^ ABOVE USING STRING METHODS?
         String value = scanner.next();
         return value;
     }
@@ -69,7 +88,5 @@ abstract public class Commands {
     // NO IMPLEMENTATION
     public abstract void printCommands();
 
-    public abstract int getUserSelection();
-
-    public abstract int runCommands();
+    public abstract void runCommands();
 }
