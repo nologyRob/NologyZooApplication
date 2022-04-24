@@ -2,7 +2,6 @@ package com.company;
 
 
 // TODO
-// LOG IN AS VISITOR
 // LOG IN AS ZOO KEEPER
 
 public class LoginCommands extends Commands {
@@ -12,11 +11,41 @@ public class LoginCommands extends Commands {
     }
 
     public void createVisitor() {
-        printMessage("Enter Details below");
-        String name = getStringInput();
-        Visitor visitor = new Visitor(name);
-        getZoo().addVisitor(visitor);
-        getZoo().setCurrentUser(visitor);
+        String name = getCredentials("Enter Name below:");
+        String password = getCredentials("Enter Password below:");
+        getZoo().createVisitor(name, password);
+    }
+
+    public String getCredentials(String message) {
+        printMessage(message);
+        return getStringInput();
+    }
+
+    public boolean loginVisitor() {
+        boolean isActive = true;
+        boolean isLoggedIn = false;
+
+        while (isActive) {
+            String name = getCredentials("Enter Name below:");
+            String password = getCredentials("Enter Password below:");
+            isLoggedIn = getZoo().logInVisitor(name, password);
+
+            if (isLoggedIn) {
+                isActive = false;
+            } else {
+                printMessage("Unable to authenticate");
+
+                printIndexedCommands(new String[]{"Retry", "Go Back"});
+
+                int userSelection = getIntegerInput();
+
+                if (userSelection == 2) {
+                    isActive = false;
+                }
+            }
+
+        }
+        return isLoggedIn;
     }
 
     @Override
@@ -40,7 +69,11 @@ public class LoginCommands extends Commands {
                 setNextCommands(CommandNames.Visitor);
                 isActive = false;
             } else if (userSelection == 2) {
-                printMessage("How do you login?");
+                boolean isLoggedIn = loginVisitor();
+                if (isLoggedIn) {
+                    setNextCommands(CommandNames.Visitor);
+                    isActive = false;
+                }
             } else if (userSelection == 3) {
                 printMessage("Staff not set yet");
             } else {
