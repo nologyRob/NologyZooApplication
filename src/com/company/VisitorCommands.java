@@ -32,13 +32,12 @@ public class VisitorCommands extends Commands {
 
     @Override
     public void runCommands() {
-        int userSelection = -1;
         boolean isActive = true;
 
         while (isActive) {
             printCommands();
 
-            userSelection = getIntegerInput();
+            int userSelection = getIntegerInput();
 
             if (userSelection == 1) {
                 printAnimals();
@@ -48,6 +47,7 @@ public class VisitorCommands extends Commands {
             } else if (userSelection == 3) {
                 updateUser();
             } else if (userSelection == 4) {
+                getZoo().logOut();
                 setNextCommands(CommandNames.Login);
                 isActive = false;
             } else {
