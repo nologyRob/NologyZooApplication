@@ -34,6 +34,7 @@ public class Zoo{
     }
 
     public void addAnimal(Animal animal) {
+
         animals.add(animal);
     }
 

@@ -1,9 +1,11 @@
 package com.company;
 
+import java.util.Locale;
+
 public class ZookeeperCommands extends Commands {
 
     public ZookeeperCommands(Zoo zoo) {
-        super(new String[]{"See Zoo Overview", "Visit Animal", "Edit Information", "Log off", "Add Animal", "Remove Animal", "Exit"}, "Zookeeper", zoo);
+        super(new String[]{"See Zoo Overview", "See List of Hungry Animals", "See List of Unhappy Animals", "Add Animal", "Remove Animal", "Log off", "Exit"}, "Zookeeper", zoo);
     }
 
     public void printAnimals() {
@@ -12,14 +14,52 @@ public class ZookeeperCommands extends Commands {
         }
     }
 
-    public void updateUser() {
-        User user = getZoo().getCurrentUser();
-        printMessage("Hello " + user.getName());
-        printMessage("Enter your new name below");
-        String newName = getStringInput();
-        user.setName(newName);
-        printMessage("Your name has been updated");
+    public void printHungryAnimals() {
+        System.out.println("The following animals are hungry and need feeding\n");
+        for (Animal animal : getZoo().getAnimals()) {
+            if(animal.getHunger()<50)
+                printMessage(animal.getInfo());
+        }
     }
+
+    public void printUnhappyAnimals() {
+        System.out.println("The following animals are severely unhappy and need attention\n");
+        for (Animal animal : getZoo().getAnimals()) {
+            if(animal.getHappiness()<20)
+                printMessage(animal.getInfo());
+        }
+    }
+
+    public Animal addNewAnimal() {
+        Animal desiredAnimal = null;
+        System.out.println("What type of animal are you looking to add?");
+        switch (getStringInput().toLowerCase(Locale.ROOT)) {
+            case "lion":
+                desiredAnimal = new Lion("Lion" + getZoo().getAnimals().size());
+                break;
+            case "llama":
+                desiredAnimal = new Llama("Llama" + getZoo().getAnimals().size());
+                break;
+            case "crocodile":
+                desiredAnimal = new Crocodile("Crocodile" + getZoo().getAnimals().size());
+                break;
+        }
+        return desiredAnimal;
+    }
+
+
+    public Animal getDesiredAnimal() {
+        Animal desiredAnimal = null;
+        printMessage("Type the ID of the animal you would like to remove");
+        String id = getStringInput();
+        for (Animal animal : getZoo().getAnimals()) {
+            if(animal.getId().equals(id)){
+                desiredAnimal = animal;
+            }
+        }
+        return desiredAnimal;
+    }
+
 
     @Override
     public void printCommands() {
@@ -42,15 +82,14 @@ public class ZookeeperCommands extends Commands {
             if (userSelection == 1) {
                 printAnimals();
             } else if (userSelection == 2) {
-                setNextCommands(CommandNames.Animal);
-                isActive = false;
+                printHungryAnimals();
             } else if (userSelection == 3) {
-                updateUser();
+                printUnhappyAnimals();
             } else if (userSelection == 4) {
-                getZoo().logOut();
-                setNextCommands(CommandNames.Login);
-                isActive = false;
-            } else {
+                getZoo().addAnimal(addNewAnimal());
+            } else if (userSelection == 5) {
+                getZoo().removeAnimal(getDesiredAnimal());
+            }else {
                 setNextCommands(CommandNames.Exit);
                 isActive = false;
             }
