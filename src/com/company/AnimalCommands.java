@@ -39,7 +39,7 @@ public class AnimalCommands extends Commands {
         }
 
         printMessage(message);
-        selectedSpecies.forEach(specie -> printMessage(specie.getInfo()));
+        selectedSpecies.forEach(specie -> printMessage(specie.getInformation()));
     }
 
     // TODO

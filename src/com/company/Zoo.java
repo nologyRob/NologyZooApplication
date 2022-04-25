@@ -30,6 +30,25 @@ public class Zoo {
         ZooFactory.populateZoo(this);
     }
 
+    public ArrayList<String> search(String searchTerm) {
+        System.out.println(searchTerm);
+        ArrayList<String> searchResults = new ArrayList<>();
+        ArrayList<Searchable> toSearch = new ArrayList<Searchable>();
+
+        toSearch.addAll(visitors);
+        toSearch.addAll(animals);
+        toSearch.addAll(zookeepers);
+
+        for (Searchable searchableItem : toSearch) {
+            if (searchableItem.isMatch(searchTerm)) {
+                searchResults.add(searchableItem.getInformation());
+            }
+        }
+
+        return searchResults;
+    }
+
+
     public ArrayList<Animal> getAnimals() {
         return animals;
     }
@@ -175,7 +194,7 @@ public class Zoo {
     public ArrayList<String> getAllAnimalInformation() {
         ArrayList<String> animalInformation = new ArrayList<>();
 
-        animals.forEach(animal -> animalInformation.add(animal.getInfo()));
+        animals.forEach(animal -> animalInformation.add(animal.getInformation()));
 
         return animalInformation;
     }
