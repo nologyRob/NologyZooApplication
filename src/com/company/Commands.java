@@ -1,54 +1,54 @@
 package com.company;
 
+import java.util.Locale;
 import java.util.Scanner;
 
 abstract public class Commands {
     private final Scanner scanner;
     private final String[] commands;
+    private final String name;
+    private final Zoo zoo;
+    private CommandNames nextCommands;
 
-    public Commands(String[] commands) {
+    public Commands(String[] commands, String name, Zoo zoo) {
         this.scanner = new Scanner(System.in);
+        this.nextCommands = CommandNames.Exit;
         this.commands = commands;
+        this.name = name;
+        this.zoo = zoo;
     }
 
-    public String[] getCommands() {
-        return commands;
+    public Zoo getZoo() {
+        return zoo;
     }
 
-    // SHOW YOU CAN CALL METHODS IN OTHER METHODS
-    public void printMessage(String message) {
-        System.out.println(message);
+    public String getName() {
+        return name;
     }
 
-    // LOOPING
-    public void printIndexedOptions() {
-        for (int i = 0; i < commands.length; i++) {
-            printMessage((i + 1) + ":" + commands[i]);
-        }
+    public CommandNames getNextCommands() {
+        return nextCommands;
     }
 
-    // METHOD OVERLOADING +
-    public void printIndexedOptions(String[] options) {
-        for (int i = 0; i < options.length; i++) {
-            printMessage((i + 1) + ":" + options[i]);
-        }
+    public void setNextCommands(CommandNames nextCommands) {
+        this.nextCommands = nextCommands;
     }
 
-    public int getIntegerInput(int limit) {
-        boolean isGettingInput = true;
+    public int getIntegerInput() {
+        boolean isActive = true;
         int input = 0;
 
-        while (isGettingInput) {
+        while (isActive) {
             boolean hasNextInt = scanner.hasNextInt();
 
             if (hasNextInt) {
                 int userInput = scanner.nextInt();
 
-                if (userInput > 0 && userInput <= limit) {
+                if (userInput > 0 && userInput <= commands.length) {
                     input = userInput;
-                    isGettingInput = false;
+                    isActive = false;
                 } else {
-                    printMessage("Enter a number between 1 - " + limit);
+                    printMessage("Enter a number between 1 - " + commands.length);
                 }
 
             } else {
@@ -56,20 +56,55 @@ abstract public class Commands {
                 scanner.nextLine();
             }
         }
-
+        // NEED THIS TO STOP IT SKIPPING WHEN YOU USE THE GET STRING INPUT
+        scanner.nextLine();
         return input;
     }
 
-    public String getStringInput() {
-        // VALIDATE LIKE ^^ ABOVE
-        String value = scanner.next();
-        return value;
+    // SHOW YOU CAN CALL METHODS IN OTHER METHODS
+    protected void printMessage(String message) {
+        System.out.println(message);
+    }
+
+    // LOOPING
+    protected void printIndexedCommands() {
+        for (int i = 0; i < commands.length; i++) {
+            printMessage((i + 1) + ":" + commands[i]);
+        }
+    }
+
+    // METHOD OVERLOADING +
+    protected void printIndexedCommands(String[] commands) {
+        for (int i = 0; i < commands.length; i++) {
+            printMessage((i + 1) + ":" + commands[i]);
+        }
+    }
+
+
+    protected String getStringInput() {
+        boolean isActive = true;
+
+        String input = "";
+
+        while (isActive) {
+            String userInput = scanner.nextLine();
+
+            String userInputClean = userInput.trim().toLowerCase(Locale.ROOT);
+
+            if (!userInputClean.equals("")) {
+                input = userInputClean;
+                isActive = false;
+            } else {
+                printMessage("Unable to understand input, try again");
+            }
+
+        }
+
+        return input;
     }
 
     // NO IMPLEMENTATION
     public abstract void printCommands();
 
-    public abstract int getUserSelection();
-
-    public abstract int runCommands();
+    public abstract void runCommands();
 }

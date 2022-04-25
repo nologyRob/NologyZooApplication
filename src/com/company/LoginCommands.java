@@ -1,63 +1,86 @@
 package com.company;
 
+
+// TODO
+// LOG IN AS ZOO KEEPER
+
 public class LoginCommands extends Commands {
 
-    private boolean isLoggedIn;
-    private User currentUser;
-
-    public LoginCommands() {
-        super(new String[]{"Create a new Visitor", "Login as Visitor", "Login as Staff", "Exit"});
-        isLoggedIn = false;
-        currentUser = null;
+    public LoginCommands(Zoo zoo) {
+        super(new String[]{"Create a new Visitor", "Login as Visitor", "Login as Zoo Keeper", "Exit"}, "login", zoo);
     }
 
-    public User getCurrentUser() {
-        return currentUser;
+    public void createVisitor() {
+        String name = getCredentials("Enter Name below:");
+        String password = getCredentials("Enter Password below:");
+        getZoo().createVisitor(name, password);
     }
 
-    public boolean isLoggedIn() {
-        return isLoggedIn;
-    }
-
-    public void setLoggedIn(boolean loggedIn) {
-        isLoggedIn = loggedIn;
-    }
-
-    public String createVisitor() {
-        printMessage("Enter Details below");
+    public String getCredentials(String message) {
+        printMessage(message);
         return getStringInput();
     }
 
+    public boolean loginVisitor() {
+        boolean isActive = true;
+        boolean isLoggedIn = false;
+
+        while (isActive) {
+            String name = getCredentials("Enter Name below:");
+            String password = getCredentials("Enter Password below:");
+            isLoggedIn = getZoo().logInVisitor(name, password);
+
+            if (isLoggedIn) {
+                isActive = false;
+            } else {
+                printMessage("Unable to authenticate");
+
+                printIndexedCommands(new String[]{"Retry", "Go Back"});
+
+                int userSelection = getIntegerInput();
+
+                if (userSelection == 2) {
+                    isActive = false;
+                }
+            }
+
+        }
+        return isLoggedIn;
+    }
 
     @Override
     public void printCommands() {
         printMessage("Welcome to the Zoo");
-        printIndexedOptions();
+        printIndexedCommands();
         printMessage("Enter Selection Below:");
     }
 
     @Override
-    public int getUserSelection() {
-        return getIntegerInput(getCommands().length);
-    }
+    public void runCommands() {
+        boolean isActive = true;
 
-    @Override
-    public int runCommands() {
-        while (!isLoggedIn()) {
+        while (isActive) {
             printCommands();
 
-            int userSelection = getUserSelection();
+            int userSelection = getIntegerInput();
 
             if (userSelection == 1) {
-                currentUser = new Visitor(createVisitor());
-                setLoggedIn(true);
-            } else if (userSelection == 4) {
-                break;
+                createVisitor();
+                setNextCommands(CommandNames.Visitor);
+                isActive = false;
+            } else if (userSelection == 2) {
+                boolean isLoggedIn = loginVisitor();
+                if (isLoggedIn) {
+                    setNextCommands(CommandNames.Visitor);
+                    isActive = false;
+                }
+            } else if (userSelection == 3) {
+                printMessage("Staff not set yet");
             } else {
-                System.out.println("Another option was pressed - Add to this");
+                setNextCommands(CommandNames.Exit);
+                isActive = false;
             }
         }
 
-        return -1;
     }
 }
