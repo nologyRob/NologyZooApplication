@@ -1,5 +1,6 @@
 package com.company;
 
+import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -77,6 +78,12 @@ abstract public class Commands {
     protected void printIndexedCommands(String[] commands) {
         for (int i = 0; i < commands.length; i++) {
             printMessage((i + 1) + ":" + commands[i]);
+        }
+    }
+
+    protected void printIndexedCommands(ArrayList<String> commands) {
+        for (int i = 0; i < commands.size(); i++) {
+            printMessage((i + 1) + ":" + commands.get(i));
         }
     }
 

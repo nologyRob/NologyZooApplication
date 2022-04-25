@@ -14,6 +14,35 @@ public class AnimalCommands extends Commands {
         super(new String[]{"View All Animals", "View By Species", "Visit Animal", "Visit Random Animal", "Go Back"}, "Animal", zoo);
     }
 
+    private void printAllAnimals() {
+        getZoo().getAllAnimalInformation().forEach(this::printMessage);
+    }
+
+    private void printSpecies() {
+
+        printMessage("Select a species:");
+
+        printIndexedCommands(getZoo().getSpecies());
+
+        boolean isActive = true;
+
+        while (isActive) {
+            int userSelection = getIntegerInput();
+
+            if (userSelection == 1) {
+
+            } else if (userSelection == 2) {
+
+            } else if (userSelection == 3) {
+
+            } else {
+
+            }
+        }
+
+
+    }
+
     @Override
     public void printCommands() {
         printMessage("Welcome to the Animal commands");
@@ -31,8 +60,10 @@ public class AnimalCommands extends Commands {
 
             if (userSelection == 1) {
                 printMessage("View all animals");
+                printAllAnimals();
             } else if (userSelection == 2) {
                 printMessage("View by species");
+                printSpecies();
             } else if (userSelection == 3) {
                 printMessage("Visit animal");
             } else if (userSelection == 4) {

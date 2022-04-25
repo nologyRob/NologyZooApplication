@@ -19,6 +19,9 @@ public class ZooFactory {
 
 
     public static void populateZoo(Zoo zoo) {
+        zoo.addSpecies(animalTypes.Lion.toString());
+        zoo.addSpecies(animalTypes.Llama.toString());
+        zoo.addSpecies(animalTypes.Crocodile.toString());
 
         for (int i = 0; i < 10; i++) {
             Animal lion = createAnimal(animalTypes.Lion, i);
