@@ -3,7 +3,7 @@ package com.company;
 import java.util.UUID;
 
 // Visitor - Feed animal, Pet animal + Increment animals popularity.
-public abstract class Animal {
+public abstract class Animal implements Searchable {
     private int age;
     private String name;
     private int hunger;
@@ -85,18 +85,26 @@ public abstract class Animal {
         this.hunger = hunger;
     }
 
-    // TODO
-    // ADD TO THIS
-    public String getInfo() {
+    @Override
+    public String getInformation() {
         return "This " + name.substring(0, name.length() - 1) + "id = " + id + " has a hunger of " + getHunger();
     }
 
+    // TODO
+    // - ADD TO THIS -> SHOULD BE ON ZOO / USER?
     public void pet() {
         System.out.println("petted animal " + id);
     }
 
+    // TODO
+    // - ADD TO THIS -> SHOULD BE ON ZOO / USER?
     public void giveToken() {
         System.out.println("token given to " + id);
+    }
+
+    @Override
+    public boolean isMatch(String toMatch) {
+        return name.contains(toMatch) || id.contains(toMatch) || type.contains(toMatch);
     }
 }
 

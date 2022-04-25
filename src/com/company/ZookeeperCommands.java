@@ -1,32 +1,32 @@
 package com.company;
 
-import java.util.Locale;
+import java.util.ArrayList;
 
 public class ZookeeperCommands extends Commands {
 
     public ZookeeperCommands(Zoo zoo) {
-        super(new String[]{"See Zoo Overview", "See List of Hungry Animals", "See List of Unhappy Animals", "Add Animal", "Remove Animal", "Log off", "Exit"}, "Zookeeper", zoo);
+        super(new String[]{"See Zoo Overview", "See List of Hungry Animals", "See List of Unhappy Animals", "Add Animal", "Remove Animal", "Search", "Log off", "Exit"}, "Zookeeper", zoo);
     }
 
     public void printAnimals() {
         for (Animal animal : getZoo().getAnimals()) {
-            printMessage(animal.getInfo());
+            printMessage(animal.getInformation());
         }
     }
 
     public void printHungryAnimals() {
         System.out.println("The following animals are hungry and need feeding\n");
         for (Animal animal : getZoo().getAnimals()) {
-            if(animal.getHunger()<50)
-                printMessage(animal.getInfo());
+            if (animal.getHunger() < 50)
+                printMessage(animal.getInformation());
         }
     }
 
     public void printUnhappyAnimals() {
         System.out.println("The following animals are severely unhappy and need attention\n");
         for (Animal animal : getZoo().getAnimals()) {
-            if(animal.getHappiness()<20)
-                printMessage(animal.getInfo());
+            if (animal.getHappiness() < 20)
+                printMessage(animal.getInformation());
         }
     }
 
@@ -41,12 +41,23 @@ public class ZookeeperCommands extends Commands {
         printMessage("Type the ID of the animal you would like to remove");
         String id = getStringInput();
         for (Animal animal : getZoo().getAnimals()) {
-            if(animal.getId().equals(id)){
+            if (animal.getId().equals(id)) {
                 desiredAnimal = animal;
                 System.out.println("Animal found");
             }
         }
         return desiredAnimal;
+    }
+
+    public void searchZoo() {
+        printMessage("Enter search term below");
+        String searchTerm = getStringInput();
+
+        ArrayList<String> searchResults = getZoo().search(searchTerm);
+
+        for (String searchResult : searchResults) {
+            printMessage(searchResult);
+        }
     }
 
 
@@ -78,7 +89,9 @@ public class ZookeeperCommands extends Commands {
                 getZoo().addAnimal(getAnimalType());
             } else if (userSelection == 5) {
                 getZoo().removeAnimal(getAnimalById());
-            }else {
+            } else if (userSelection == 6) {
+                searchZoo();
+            } else {
                 setNextCommands(CommandNames.Exit);
                 isActive = false;
             }

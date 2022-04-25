@@ -3,7 +3,7 @@ package com.company;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-abstract class User {
+abstract class User implements Searchable {
     private String name;
     private LocalDateTime dateEntered;
     private boolean isStaff;
@@ -22,6 +22,10 @@ abstract class User {
         return isStaff;
     }
 
+    public String getId() {
+        return id;
+    }
+
     public String getName() {
         return name;
     }
@@ -32,5 +36,10 @@ abstract class User {
 
     public boolean authenticate(String name, String password) {
         return this.name.equals(name) && this.password.equals(password);
+    }
+
+    @Override
+    public boolean isMatch(String toMatch) {
+        return name.contains(toMatch) || id.contains(toMatch);
     }
 }
