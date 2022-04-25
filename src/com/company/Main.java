@@ -15,6 +15,7 @@ public class Main {
         LoginCommands loginCommands = new LoginCommands(zoo);
         VisitorCommands visitorCommands = new VisitorCommands(zoo);
         AnimalCommands animalCommands = new AnimalCommands(zoo);
+        ZookeeperCommands zookeeperCommands = new ZookeeperCommands(zoo);
 
         Commands currentScreen = loginCommands;
         boolean isRunning = true;
@@ -33,6 +34,9 @@ public class Main {
                 case Animal:
                     currentScreen = animalCommands;
                     break;
+                case ZooKeeper:
+                    currentScreen = zookeeperCommands;
+                    break;
                 default:
                     System.out.println("Quiting");
                     isRunning = false;
@@ -42,4 +46,7 @@ public class Main {
         }
 
     }
+
+
+
 }

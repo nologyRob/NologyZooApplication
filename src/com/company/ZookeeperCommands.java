@@ -55,6 +55,7 @@ public class ZookeeperCommands extends Commands {
         for (Animal animal : getZoo().getAnimals()) {
             if(animal.getId().equals(id)){
                 desiredAnimal = animal;
+                System.out.println("Animal found");
             }
         }
         return desiredAnimal;
