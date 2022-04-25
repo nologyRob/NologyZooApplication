@@ -11,9 +11,10 @@ public abstract class Animal {
     private boolean canPet;
     private int happiness;
     private String id;
+    private String type;
 
 
-    public Animal(String name, boolean canPet) {
+    public Animal(String name, String type, boolean canPet) {
         this.age = (int) (Math.random() * 20 + 1);
         this.name = name;
         this.hunger = (int) (Math.random() * 100 + 1);
@@ -21,6 +22,11 @@ public abstract class Animal {
         this.popularity = 0;
         this.happiness = (int) (Math.random() * 100 + 1);
         this.id = UUID.randomUUID().toString().substring(0, 5);
+        this.type = type;
+    }
+
+    public String getType() {
+        return type;
     }
 
     public int getAge() {

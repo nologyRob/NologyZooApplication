@@ -1,5 +1,6 @@
 package com.company;
 
+import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -61,6 +62,33 @@ abstract public class Commands {
         return input;
     }
 
+    public int getIntegerInput(int limit) {
+        boolean isActive = true;
+        int input = 0;
+
+        while (isActive) {
+            boolean hasNextInt = scanner.hasNextInt();
+
+            if (hasNextInt) {
+                int userInput = scanner.nextInt();
+
+                if (userInput > 0 && userInput <= limit) {
+                    input = userInput;
+                    isActive = false;
+                } else {
+                    printMessage("Enter a number between 1 - " + limit);
+                }
+
+            } else {
+                printMessage("Unable to understand input, try again");
+                scanner.nextLine();
+            }
+        }
+        // NEED THIS TO STOP IT SKIPPING WHEN YOU USE THE GET STRING INPUT
+        scanner.nextLine();
+        return input;
+    }
+
     // SHOW YOU CAN CALL METHODS IN OTHER METHODS
     protected void printMessage(String message) {
         System.out.println(message);
@@ -77,6 +105,12 @@ abstract public class Commands {
     protected void printIndexedCommands(String[] commands) {
         for (int i = 0; i < commands.length; i++) {
             printMessage((i + 1) + ":" + commands[i]);
+        }
+    }
+
+    protected void printIndexedCommands(ArrayList<String> commands) {
+        for (int i = 0; i < commands.size(); i++) {
+            printMessage((i + 1) + ":" + commands.get(i));
         }
     }
 

@@ -1,6 +1,7 @@
 package com.company;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Locale;
 
 // TODO
@@ -12,19 +13,22 @@ import java.util.Locale;
 // - SEARCHING ANIMALS
 // ADD VISITORS IN ZOO FACTORY
 
-public class Zoo{
+public class Zoo {
 
     private final ArrayList<Animal> animals;
     private User currentUser;
     private ArrayList<Visitor> visitors;
     private ArrayList<Zookeeper> zookeepers;
-//    private ArrayList<ZooKeeper> zooKeepers;
+    private ArrayList<String> species;
+    private HashMap<String, ArrayList<Animal>> speciesLookup;
 
     public Zoo() {
         this.currentUser = null;
         this.animals = new ArrayList<>();
         this.visitors = new ArrayList<>();
+        this.species = new ArrayList<>();
         this.zookeepers = new ArrayList<>();
+        this.speciesLookup = new HashMap<>();
         visitors.add(new Visitor("charlie", "test"));
         zookeepers.add(new Zookeeper("rob", "test"));
         ZooFactory.populateZoo(this);
@@ -36,6 +40,42 @@ public class Zoo{
 
     public void addAnimal(Animal animal) {
         animals.add(animal);
+        updateSpeciesLookup(animal);
+    }
+
+    private void updateSpeciesLookup(Animal animal) {
+        String animalType = animal.getType();
+
+        if (speciesLookup.containsKey(animalType)) {
+            speciesLookup.get(animalType).add(animal);
+        } else {
+            ArrayList<Animal> species = new ArrayList<>();
+            species.add(animal);
+            speciesLookup.put(animalType, species);
+        }
+    }
+
+    public void addSpecies(String species) {
+        this.species.add(species);
+    }
+
+    public ArrayList<Animal> getSpecies(AnimalTypes animalType) {
+
+        switch (animalType) {
+            case Lion:
+                return speciesLookup.get(AnimalTypes.Lion.toString());
+            case Llama:
+                return speciesLookup.get(AnimalTypes.Llama.toString());
+            case Crocodile:
+                return speciesLookup.get(AnimalTypes.Crocodile.toString());
+            default:
+                return null;
+        }
+
+    }
+
+    public ArrayList<String> getSpecies() {
+        return species;
     }
     public void addAnimal(String animal) {
         Animal desiredAnimal = null;
@@ -87,6 +127,7 @@ public class Zoo{
 
         return false;
     }
+
     public boolean logInZookeeper(String name, String password) {
         for (Zookeeper zookeeper : zookeepers) {
             if (zookeeper.authenticate(name, password)) {
@@ -95,6 +136,24 @@ public class Zoo{
         }
 
         return false;
+    }
+
+    public ArrayList<String> getZooOverview() {
+        ArrayList<String> overview = new ArrayList<>();
+
+        overview.add("The Zoo currently has " + animals.size() + " animals.");
+        overview.add("The Zoo currently has " + visitors.size() + " visitors.");
+        overview.add("The Current user is " + currentUser.getName());
+
+        return overview;
+    }
+
+    public ArrayList<String> getAllAnimalInformation() {
+        ArrayList<String> animalInformation = new ArrayList<>();
+
+        animals.forEach(animal -> animalInformation.add(animal.getInfo()));
+
+        return animalInformation;
     }
 
     public void removeAnimal(Animal animal) {

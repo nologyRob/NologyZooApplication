@@ -17,25 +17,25 @@ public class Main {
         AnimalCommands animalCommands = new AnimalCommands(zoo);
         ZookeeperCommands zookeeperCommands = new ZookeeperCommands(zoo);
 
-        Commands currentScreen = loginCommands;
+        Commands currentCommands = loginCommands;
         boolean isRunning = true;
 
         while (isRunning) {
 
-            currentScreen.runCommands();
+            currentCommands.runCommands();
 
-            switch (currentScreen.getNextCommands()) {
+            switch (currentCommands.getNextCommands()) {
                 case Login:
-                    currentScreen = loginCommands;
+                    currentCommands = loginCommands;
                     break;
                 case Visitor:
-                    currentScreen = visitorCommands;
+                    currentCommands = visitorCommands;
                     break;
                 case Animal:
-                    currentScreen = animalCommands;
+                    currentCommands = animalCommands;
                     break;
                 case ZooKeeper:
-                    currentScreen = zookeeperCommands;
+                    currentCommands = zookeeperCommands;
                     break;
                 default:
                     System.out.println("Quiting");
@@ -46,7 +46,6 @@ public class Main {
         }
 
     }
-
 
 
 }

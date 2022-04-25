@@ -6,9 +6,9 @@ public class VisitorCommands extends Commands {
         super(new String[]{"See Zoo Overview", "Visit Animal", "Edit Information", "Log off", "Exit"}, "Visitor", zoo);
     }
 
-    public void printAnimals() {
-        for (Animal animal : getZoo().getAnimals()) {
-            printMessage(animal.getInfo());
+    public void printOverview() {
+        for (String overviewItem : getZoo().getZooOverview()) {
+            printMessage(overviewItem);
         }
     }
 
@@ -40,7 +40,7 @@ public class VisitorCommands extends Commands {
             int userSelection = getIntegerInput();
 
             if (userSelection == 1) {
-                printAnimals();
+                printOverview();
             } else if (userSelection == 2) {
                 setNextCommands(CommandNames.Animal);
                 isActive = false;
