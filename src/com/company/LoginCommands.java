@@ -48,6 +48,33 @@ public class LoginCommands extends Commands {
         return isLoggedIn;
     }
 
+    public boolean loginZookeeper() {
+        boolean isActive = true;
+        boolean isLoggedIn = false;
+
+        while (isActive) {
+            String name = getCredentials("Enter Name below:");
+            String password = getCredentials("Enter Password below:");
+            isLoggedIn = getZoo().logInZookeeper(name, password);
+
+            if (isLoggedIn) {
+                isActive = false;
+            } else {
+                printMessage("Unable to authenticate");
+
+                printIndexedCommands(new String[]{"Retry", "Go Back"});
+
+                int userSelection = getIntegerInput();
+
+                if (userSelection == 2) {
+                    isActive = false;
+                }
+            }
+
+        }
+        return isLoggedIn;
+    }
+
     @Override
     public void printCommands() {
         printMessage("Welcome to the Zoo");
@@ -75,7 +102,11 @@ public class LoginCommands extends Commands {
                     isActive = false;
                 }
             } else if (userSelection == 3) {
-                printMessage("Staff not set yet");
+                boolean isLoggedIn = loginZookeeper();
+                if (isLoggedIn) {
+                    setNextCommands(CommandNames.ZooKeeper);
+                    isActive = false;
+                }
             } else {
                 setNextCommands(CommandNames.Exit);
                 isActive = false;

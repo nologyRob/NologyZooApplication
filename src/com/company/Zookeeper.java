@@ -3,14 +3,10 @@ package com.company;
 import java.util.Locale;
 
 public class Zookeeper extends User {
-    public Zookeeper(String name, boolean isStaff) {
-        super(name, isStaff=true);
-    }
 
-    private void cleanPen(Pen<Animal> pen) {
-        System.out.println("Cleanliness was " + pen.getCleanliness());
-        pen.setCleanliness();
-        System.out.println("Cleanliness is now " + pen.getCleanliness());
+
+    public Zookeeper(String name, String password) {
+        super(name, true, password);
     }
 
     private void removeAnimal(Animal animal, Zoo zoo) {
@@ -19,7 +15,7 @@ public class Zookeeper extends User {
         System.out.println("Animal " + animal + " is now removed");
     }
 
-    private void addAnimal(String name, String type, Zoo zoo, Pen pen) {
+    private void addAnimal(String name, String type, Zoo zoo) {
         System.out.println("You have chosen to add the animal type " + type + " and the name of " + name);
         switch (type.toLowerCase(Locale.ROOT)){
             case "lion":

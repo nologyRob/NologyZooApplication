@@ -11,18 +11,21 @@ import java.util.ArrayList;
 // - SEARCHING ANIMALS
 // ADD VISITORS IN ZOO FACTORY
 
-public class Zoo {
+public class Zoo{
 
     private final ArrayList<Animal> animals;
     private User currentUser;
     private ArrayList<Visitor> visitors;
+    private ArrayList<Zookeeper> zookeepers;
 //    private ArrayList<ZooKeeper> zooKeepers;
 
     public Zoo() {
         this.currentUser = null;
         this.animals = new ArrayList<>();
         this.visitors = new ArrayList<>();
+        this.zookeepers = new ArrayList<>();
         visitors.add(new Visitor("charlie", "test"));
+        zookeepers.add(new Zookeeper("rob", "test"));
         ZooFactory.populateZoo(this);
     }
 
@@ -65,5 +68,17 @@ public class Zoo {
 
         return false;
     }
+    public boolean logInZookeeper(String name, String password) {
+        for (Zookeeper zookeeper : zookeepers) {
+            if (zookeeper.authenticate(name, password)) {
+                return true;
+            }
+        }
 
+        return false;
+    }
+
+    public void removeAnimal(Animal animal) {
+        animals.remove(animal);
+    }
 }
