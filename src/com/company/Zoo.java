@@ -2,6 +2,7 @@ package com.company;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 
 // TODO
 // OVERVIEW OF THE ZOO METHOD
@@ -76,6 +77,24 @@ public class Zoo {
     public ArrayList<String> getSpecies() {
         return species;
     }
+    public void addAnimal(String animal) {
+        Animal desiredAnimal = null;
+        System.out.println("What type of animal are you looking to add?");
+        switch (animal) {
+            case "lion":
+                desiredAnimal = new Lion("Lion" + getAnimals().size());
+                break;
+            case "llama":
+                desiredAnimal = new Llama("Llama" + getAnimals().size());
+                break;
+            case "crocodile":
+                desiredAnimal = new Crocodile("Crocodile" + getAnimals().size());
+                break;
+        }
+
+        animals.add(desiredAnimal);
+    }
+
 
     public User getCurrentUser() {
         return currentUser;
