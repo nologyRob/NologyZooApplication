@@ -82,7 +82,7 @@ public abstract class Animal {
     // TODO
     // ADD TO THIS
     public String getInfo() {
-        return "This " + name.substring(0, name.length() - 1) + "id = " + id + " some info about it";
+        return "This " + name.substring(0, name.length() - 1) + "id = " + id + " has a hunger of " + getHunger();
     }
 }
 
