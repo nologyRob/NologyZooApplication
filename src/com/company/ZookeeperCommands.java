@@ -30,25 +30,13 @@ public class ZookeeperCommands extends Commands {
         }
     }
 
-    public Animal addNewAnimal() {
-        Animal desiredAnimal = null;
+    public String getAnimalType() {
         System.out.println("What type of animal are you looking to add?");
-        switch (getStringInput().toLowerCase(Locale.ROOT)) {
-            case "lion":
-                desiredAnimal = new Lion("Lion" + getZoo().getAnimals().size());
-                break;
-            case "llama":
-                desiredAnimal = new Llama("Llama" + getZoo().getAnimals().size());
-                break;
-            case "crocodile":
-                desiredAnimal = new Crocodile("Crocodile" + getZoo().getAnimals().size());
-                break;
-        }
-        return desiredAnimal;
+        return getStringInput();
     }
 
 
-    public Animal getDesiredAnimal() {
+    public Animal getAnimalById() {
         Animal desiredAnimal = null;
         printMessage("Type the ID of the animal you would like to remove");
         String id = getStringInput();
@@ -87,9 +75,9 @@ public class ZookeeperCommands extends Commands {
             } else if (userSelection == 3) {
                 printUnhappyAnimals();
             } else if (userSelection == 4) {
-                getZoo().addAnimal(addNewAnimal());
+                getZoo().addAnimal(getAnimalType());
             } else if (userSelection == 5) {
-                getZoo().removeAnimal(getDesiredAnimal());
+                getZoo().removeAnimal(getAnimalById());
             }else {
                 setNextCommands(CommandNames.Exit);
                 isActive = false;
