@@ -15,6 +15,7 @@ public class Main {
         LoginCommands loginCommands = new LoginCommands(zoo);
         VisitorCommands visitorCommands = new VisitorCommands(zoo);
         AnimalCommands animalCommands = new AnimalCommands(zoo);
+        ZookeeperCommands zookeeperCommands = new ZookeeperCommands(zoo);
 
         Commands currentCommands = loginCommands;
         boolean isRunning = true;
@@ -33,6 +34,9 @@ public class Main {
                 case Animal:
                     currentCommands = animalCommands;
                     break;
+                case ZooKeeper:
+                    currentCommands = zookeeperCommands;
+                    break;
                 default:
                     System.out.println("Quiting");
                     isRunning = false;
@@ -42,4 +46,6 @@ public class Main {
         }
 
     }
+
+
 }
