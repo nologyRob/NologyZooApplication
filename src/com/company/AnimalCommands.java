@@ -5,10 +5,8 @@ import java.util.ArrayList;
 public class AnimalCommands extends Commands {
 
     // TODO
-    // VISIT ANIMAL + VISIT RANDOM ANIMAL - SIMILAR FUNCTIONALITY
-    // - PET ANIMAL
-    // - RATE / GIVE TOKEN
-
+    // CLEAN UP -> VISITING ANIMALS
+    // ZOO KEEPER???????
 
     public AnimalCommands(Zoo zoo) {
         super(new String[]{"View All Animals", "View By Species", "Visit Animal", "Visit Random Animal", "Go Back"}, "Animal", zoo);
@@ -44,6 +42,44 @@ public class AnimalCommands extends Commands {
         selectedSpecies.forEach(specie -> printMessage(specie.getInfo()));
     }
 
+    // TODO
+    // NEEDS WORK :S
+    private void visitAnimal() {
+        String animalId;
+        printMessage("Enter the animal ID below:");
+        animalId = getStringInput();
+
+        if (getZoo().hasAnimal(animalId)) {
+            interactWithAnimal(animalId);
+        } else {
+            printMessage("Animal not found...");
+        }
+    }
+
+    private void visitRandomAnimal() {
+        interactWithAnimal(getZoo().getRandomAnimalId());
+    }
+
+    private void interactWithAnimal(String animalId) {
+
+        boolean isActive = true;
+
+
+        while (isActive) {
+            printIndexedCommands(new String[]{"Pet", "Give token", "Go back"});
+
+            int userSelection = getIntegerInput(3);
+
+            if (userSelection == 1) {
+                getZoo().petAnimal(animalId);
+            } else if (userSelection == 2) {
+                getZoo().giveToken(animalId);
+            } else {
+                isActive = false;
+            }
+        }
+    }
+
     @Override
     public void printCommands() {
         printMessage("Welcome to the Animal commands");
@@ -67,8 +103,10 @@ public class AnimalCommands extends Commands {
                 printSpecies();
             } else if (userSelection == 3) {
                 printMessage("Visit animal");
+                visitAnimal();
             } else if (userSelection == 4) {
                 printMessage("Visit random animal");
+                visitRandomAnimal();
             } else {
                 setNextCommands(CommandNames.Visitor);
                 isActive = false;

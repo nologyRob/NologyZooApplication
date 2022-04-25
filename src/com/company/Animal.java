@@ -90,5 +90,13 @@ public abstract class Animal {
     public String getInfo() {
         return "This " + name.substring(0, name.length() - 1) + "id = " + id + " has a hunger of " + getHunger();
     }
+
+    public void pet() {
+        System.out.println("petted animal " + id);
+    }
+
+    public void giveToken() {
+        System.out.println("token given to " + id);
+    }
 }
 
