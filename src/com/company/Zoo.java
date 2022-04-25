@@ -2,15 +2,9 @@ package com.company;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Locale;
 
 // TODO
-// OVERVIEW OF THE ZOO METHOD
-// LOG IN ZOO KEEPER
-// HASH SET & HASH MAP
-// - ANIMAL TYPE : ANIMALS
-// CREATE A LOOKUP MAP
-// - SEARCHING ANIMALS
+// HASH SET -> USERNAMES?
 // ADD VISITORS IN ZOO FACTORY
 
 public class Zoo {
@@ -21,6 +15,7 @@ public class Zoo {
     private ArrayList<Zookeeper> zookeepers;
     private ArrayList<String> species;
     private HashMap<String, ArrayList<Animal>> speciesLookup;
+    private HashMap<String, Animal> animalLookup;
 
     public Zoo() {
         this.currentUser = null;
@@ -29,6 +24,7 @@ public class Zoo {
         this.species = new ArrayList<>();
         this.zookeepers = new ArrayList<>();
         this.speciesLookup = new HashMap<>();
+        this.animalLookup = new HashMap<>();
         visitors.add(new Visitor("charlie", "test"));
         zookeepers.add(new Zookeeper("rob", "test"));
         ZooFactory.populateZoo(this);
@@ -38,12 +34,37 @@ public class Zoo {
         return animals;
     }
 
-    public void addAnimal(Animal animal) {
-        animals.add(animal);
-        updateSpeciesLookup(animal);
+    public boolean hasAnimal(String animalId) {
+        return animalLookup.containsKey(animalId);
     }
 
-    private void updateSpeciesLookup(Animal animal) {
+    public String getRandomAnimalId() {
+        int index = (int) (Math.random() * animals.size());
+        return animals.get(index).getId();
+    }
+
+    public void petAnimal(String animalId) {
+        Animal animal = animalLookup.get(animalId);
+        animal.pet();
+    }
+
+    public void giveToken(String animalId) {
+        Animal animal = animalLookup.get(animalId);
+        animal.giveToken();
+    }
+
+    public void addAnimal(Animal animal) {
+        animals.add(animal);
+        addToSpeciesLookup(animal);
+        addToAnimalLookup(animal);
+    }
+
+    private void addToAnimalLookup(Animal animal) {
+        String animalId = animal.getId();
+        animalLookup.put(animalId, animal);
+    }
+
+    private void addToSpeciesLookup(Animal animal) {
         String animalType = animal.getType();
 
         if (speciesLookup.containsKey(animalType)) {
@@ -77,6 +98,7 @@ public class Zoo {
     public ArrayList<String> getSpecies() {
         return species;
     }
+
     public void addAnimal(String animal) {
         Animal desiredAnimal = null;
         System.out.println("What type of animal are you looking to add?");
@@ -121,6 +143,7 @@ public class Zoo {
     public boolean logInVisitor(String name, String password) {
         for (Visitor visitor : visitors) {
             if (visitor.authenticate(name, password)) {
+                setCurrentUser(visitor);
                 return true;
             }
         }
@@ -131,6 +154,7 @@ public class Zoo {
     public boolean logInZookeeper(String name, String password) {
         for (Zookeeper zookeeper : zookeepers) {
             if (zookeeper.authenticate(name, password)) {
+                setCurrentUser(zookeeper);
                 return true;
             }
         }
@@ -159,4 +183,6 @@ public class Zoo {
     public void removeAnimal(Animal animal) {
         animals.remove(animal);
     }
+
+
 }
