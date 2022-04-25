@@ -58,6 +58,21 @@ public class Zoo {
         this.species.add(species);
     }
 
+    public ArrayList<Animal> getSpecies(AnimalTypes animalType) {
+
+        switch (animalType) {
+            case Lion:
+                return speciesLookup.get(AnimalTypes.Lion.toString());
+            case Llama:
+                return speciesLookup.get(AnimalTypes.Llama.toString());
+            case Crocodile:
+                return speciesLookup.get(AnimalTypes.Crocodile.toString());
+            default:
+                return null;
+        }
+
+    }
+
     public ArrayList<String> getSpecies() {
         return species;
     }
@@ -93,6 +108,7 @@ public class Zoo {
 
         return false;
     }
+
     public boolean logInZookeeper(String name, String password) {
         for (Zookeeper zookeeper : zookeepers) {
             if (zookeeper.authenticate(name, password)) {

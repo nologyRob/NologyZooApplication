@@ -6,7 +6,7 @@ package com.company;
 
 public class ZooFactory {
 
-    private static Animal createAnimal(animalTypes animal, int index) {
+    private static Animal createAnimal(AnimalTypes animal, int index) {
         switch (animal) {
             case Lion:
                 return new Lion("lion" + index);
@@ -19,14 +19,14 @@ public class ZooFactory {
 
 
     public static void populateZoo(Zoo zoo) {
-        zoo.addSpecies(animalTypes.Lion.toString());
-        zoo.addSpecies(animalTypes.Llama.toString());
-        zoo.addSpecies(animalTypes.Crocodile.toString());
+        zoo.addSpecies(AnimalTypes.Lion.toString());
+        zoo.addSpecies(AnimalTypes.Llama.toString());
+        zoo.addSpecies(AnimalTypes.Crocodile.toString());
 
         for (int i = 0; i < 10; i++) {
-            Animal lion = createAnimal(animalTypes.Lion, i);
-            Animal llama = createAnimal(animalTypes.Llama, i);
-            Animal crocodile = createAnimal(animalTypes.Crocodile, i);
+            Animal lion = createAnimal(AnimalTypes.Lion, i);
+            Animal llama = createAnimal(AnimalTypes.Llama, i);
+            Animal crocodile = createAnimal(AnimalTypes.Crocodile, i);
 
             zoo.addAnimal(lion);
             zoo.addAnimal(llama);
@@ -35,8 +35,5 @@ public class ZooFactory {
 
     }
 
-    private enum animalTypes {
-        Lion, Llama, Crocodile
-    }
 
 }

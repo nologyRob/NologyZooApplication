@@ -1,10 +1,10 @@
 package com.company;
 
+import java.util.ArrayList;
+
 public class AnimalCommands extends Commands {
 
     // TODO
-    // VIEW ALL ANIMALS
-    // VIEW BY SPECIES
     // VISIT ANIMAL + VISIT RANDOM ANIMAL - SIMILAR FUNCTIONALITY
     // - PET ANIMAL
     // - RATE / GIVE TOKEN
@@ -19,28 +19,29 @@ public class AnimalCommands extends Commands {
     }
 
     private void printSpecies() {
-
         printMessage("Select a species:");
+        ArrayList<String> species = getZoo().getSpecies();
 
-        printIndexedCommands(getZoo().getSpecies());
+        printIndexedCommands(species);
 
-        boolean isActive = true;
+        ArrayList<Animal> selectedSpecies;
 
-        while (isActive) {
-            int userSelection = getIntegerInput();
+        int userSelection = getIntegerInput(species.size());
+        String message;
 
-            if (userSelection == 1) {
-
-            } else if (userSelection == 2) {
-
-            } else if (userSelection == 3) {
-
-            } else {
-
-            }
+        if (userSelection == 1) {
+            selectedSpecies = getZoo().getSpecies(AnimalTypes.Lion);
+            message = "We have the following " + AnimalTypes.Lion + "s in the Zoo.";
+        } else if (userSelection == 2) {
+            selectedSpecies = getZoo().getSpecies(AnimalTypes.Llama);
+            message = "We have the following " + AnimalTypes.Llama + "s in the Zoo.";
+        } else {
+            selectedSpecies = getZoo().getSpecies(AnimalTypes.Crocodile);
+            message = "We have the following " + AnimalTypes.Crocodile + "s in the Zoo.";
         }
 
-
+        printMessage(message);
+        selectedSpecies.forEach(specie -> printMessage(specie.getInfo()));
     }
 
     @Override
