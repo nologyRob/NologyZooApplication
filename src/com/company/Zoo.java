@@ -11,8 +11,8 @@ import java.util.HashMap;
 public class Zoo {
 
     private final ArrayList<Animal> animals;
-    private final ArrayList<Visitor> visitors;
-    private final ArrayList<Zookeeper> zookeepers;
+    private final ArrayList<User> visitors;
+    private final ArrayList<User> zookeepers;
     private final ArrayList<String> animalTypes;
 
     private final HashMap<String, Animal> animalLookup;
@@ -48,10 +48,10 @@ public class Zoo {
         currentUser = null;
     }
 
-    public boolean logInVisitor(String name, String password) {
-        for (Visitor visitor : visitors) {
-            if (visitor.authenticate(name, password)) {
-                currentUser = visitor;
+    private boolean logIn(String name, String password, ArrayList<User> users) {
+        for (User user : users) {
+            if (user.authenticate(name, password)) {
+                currentUser = user;
                 return true;
             }
         }
@@ -59,15 +59,12 @@ public class Zoo {
         return false;
     }
 
-    public boolean logInZookeeper(String name, String password) {
-        for (Zookeeper zookeeper : zookeepers) {
-            if (zookeeper.authenticate(name, password)) {
-                currentUser = zookeeper;
-                return true;
-            }
-        }
+    public boolean logInVisitor(String name, String password) {
+        return logIn(name, password, visitors);
+    }
 
-        return false;
+    public boolean logInZookeeper(String name, String password) {
+        return logIn(name, password, zookeepers);
     }
 
     // --- CREATE ---
