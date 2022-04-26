@@ -1,9 +1,7 @@
 package com.company;
 
 public interface Searchable {
-    public boolean isMatch(String toMatch);
+    boolean isMatch(String toMatch);
 
-    public String getInformation();
-
-    public String getId();
+    String getInformation();
 }

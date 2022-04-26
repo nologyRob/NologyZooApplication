@@ -7,9 +7,7 @@ public class VisitorCommands extends Commands {
     }
 
     public void printOverview() {
-        for (String overviewItem : getZoo().getZooOverview()) {
-            printMessage(overviewItem);
-        }
+     printMessage(getZoo().getZooOverview());
     }
 
     public void updateUser() {

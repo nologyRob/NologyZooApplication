@@ -4,11 +4,11 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 abstract class User implements Searchable {
+    private final LocalDateTime dateEntered;
+    private final boolean isStaff;
+    private final String id;
+    private final String password;
     private String name;
-    private LocalDateTime dateEntered;
-    private boolean isStaff;
-    private String id;
-    private String password;
 
     public User(String name, boolean isStaff, String password) {
         this.name = name;

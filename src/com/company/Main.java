@@ -1,8 +1,6 @@
 package com.company;
 
 // TODO
-// ANIMAL SCREEN? View animal
-
 // ZooKeeper -
 // Visitor - View Pen Stats, Feed all, Gain Pen Badge?
 // ZooKeeper - View Pen Stats Feed all, Add / Remove animal
