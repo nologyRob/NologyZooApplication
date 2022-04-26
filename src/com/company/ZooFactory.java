@@ -6,22 +6,24 @@ package com.company;
 
 public class ZooFactory {
 
-    private static Animal createAnimal(AnimalTypes animal, int index) {
+    public static Animal createAnimal(AnimalTypes animal, int index) {
         switch (animal) {
             case Lion:
-                return new Lion("lion" + index);
+                return new Lion(AnimalTypes.Lion.toString() + index);
             case Llama:
-                return new Llama("llama" + index);
+                return new Llama(AnimalTypes.Llama.toString() + index);
             default:
-                return new Crocodile("crocodile" + index);
+                return new Crocodile(AnimalTypes.Crocodile.toString() + index);
         }
     }
 
+    private static void populateAnimalTypes(Zoo zoo) {
+        for (AnimalTypes animalType : AnimalTypes.values()) {
+            zoo.addAnimalTypes(animalType.toString());
+        }
+    }
 
     public static void populateZoo(Zoo zoo) {
-        zoo.addSpecies(AnimalTypes.Lion.toString());
-        zoo.addSpecies(AnimalTypes.Llama.toString());
-        zoo.addSpecies(AnimalTypes.Crocodile.toString());
 
         for (int i = 0; i < 10; i++) {
             Animal lion = createAnimal(AnimalTypes.Lion, i);
@@ -33,7 +35,7 @@ public class ZooFactory {
             zoo.addAnimal(crocodile);
         }
 
+        populateAnimalTypes(zoo);
     }
-
 
 }

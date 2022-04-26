@@ -13,33 +13,34 @@ public class AnimalCommands extends Commands {
     }
 
     private void printAllAnimals() {
-        getZoo().getAllAnimalInformation().forEach(this::printMessage);
+        printMessage(getZoo().getAnimalsOverview());
     }
 
-    private void printSpecies() {
-        printMessage("Select a species:");
-        ArrayList<String> species = getZoo().getSpecies();
+    private void printAnimalsByType() {
+        printMessage("Select a Type of Animal:");
+        ArrayList<String> animalTypes = getZoo().getAnimalTypes();
 
-        printIndexedCommands(species);
+        printIndexedCommands(animalTypes);
 
-        ArrayList<Animal> selectedSpecies;
+        ArrayList<Animal> selectedAnimalsByType;
 
-        int userSelection = getIntegerInput(species.size());
+        int userSelection = getIntegerInput(animalTypes.size());
+
         String message;
 
         if (userSelection == 1) {
-            selectedSpecies = getZoo().getSpecies(AnimalTypes.Lion);
+            selectedAnimalsByType = getZoo().getAnimalByType(AnimalTypes.Lion);
             message = "We have the following " + AnimalTypes.Lion + "s in the Zoo.";
         } else if (userSelection == 2) {
-            selectedSpecies = getZoo().getSpecies(AnimalTypes.Llama);
+            selectedAnimalsByType = getZoo().getAnimalByType(AnimalTypes.Llama);
             message = "We have the following " + AnimalTypes.Llama + "s in the Zoo.";
         } else {
-            selectedSpecies = getZoo().getSpecies(AnimalTypes.Crocodile);
+            selectedAnimalsByType = getZoo().getAnimalByType(AnimalTypes.Crocodile);
             message = "We have the following " + AnimalTypes.Crocodile + "s in the Zoo.";
         }
 
         printMessage(message);
-        selectedSpecies.forEach(specie -> printMessage(specie.getInformation()));
+        selectedAnimalsByType.forEach(animal -> printMessage(animal.getInformation()));
     }
 
     // TODO
@@ -64,16 +65,17 @@ public class AnimalCommands extends Commands {
 
         boolean isActive = true;
 
-
         while (isActive) {
             printIndexedCommands(new String[]{"Pet", "Give token", "Go back"});
 
             int userSelection = getIntegerInput(3);
 
             if (userSelection == 1) {
-                getZoo().petAnimal(animalId);
+                boolean hasPet = getZoo().petAnimal(animalId);
+                printMessage(hasPet ? "Successful petting" : "Unsuccessful petting");
             } else if (userSelection == 2) {
-                getZoo().giveToken(animalId);
+                boolean hasSpentToken = getZoo().spendAnimalToken(animalId);
+                printMessage(hasSpentToken ? "Animal token spent" : "No tokens left to spend");
             } else {
                 isActive = false;
             }
@@ -99,8 +101,8 @@ public class AnimalCommands extends Commands {
                 printMessage("View all animals");
                 printAllAnimals();
             } else if (userSelection == 2) {
-                printMessage("View by species");
-                printSpecies();
+                printMessage("View by Animal type");
+                printAnimalsByType();
             } else if (userSelection == 3) {
                 printMessage("Visit animal");
                 visitAnimal();

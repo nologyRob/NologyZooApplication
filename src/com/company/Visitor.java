@@ -1,40 +1,33 @@
 package com.company;
 
 public class Visitor extends User {
-    int animalTokens;
+    private int animalTokens;
+    private int happiness;
 
     public Visitor(String name, String password) {
         super(name, false, password);
-        this.animalTokens = 10;
+        this.animalTokens = 5;
+        this.happiness = (int) (Math.random() * 100 + 1);
     }
 
+    public void incrementHappiness() {
+        happiness += 10;
+    }
 
-    // TODO
-    // LOOK AT THIS
-    public void giveToken(Zoo zoo, String animalName, int tokenAmount) {
-        // Opportunity to learn about streams later in the code-along
-        // Initially forEach
-        zoo.getAnimals().forEach((animal) -> {
-            if (animal.getName().equals(animalName)) {
-                animal.setPopularity(animal.getPopularity() + tokenAmount);
-                System.out.println("You have given " + animal.getName() + tokenAmount + (tokenAmount > 1 ? " tokens" : " token"));
-            }
-        });
-        this.animalTokens = 10 - tokenAmount;
-        System.out.println("You have " + this.animalTokens + " remaining");
-
+    public void decrementHappiness() {
+        happiness -= 10;
     }
 
     public int getAnimalTokens() {
         return animalTokens;
     }
 
-    public void setAnimalTokens(int animalTokens) {
-        this.animalTokens = animalTokens;
+    public void spendToken() {
+        this.animalTokens -= 1;
     }
 
     @Override
     public String getInformation() {
-        return "This " + getName() + "id = " + getId() + " has " + animalTokens + " left.";
+        return String.format("This %s, with the id: %s.\nHas %d tokens left and is %d happy.", getName(), getId(), animalTokens, happiness);
     }
 }

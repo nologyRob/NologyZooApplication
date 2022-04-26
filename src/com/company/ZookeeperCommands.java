@@ -5,61 +5,57 @@ import java.util.ArrayList;
 public class ZookeeperCommands extends Commands {
 
     public ZookeeperCommands(Zoo zoo) {
-        super(new String[]{"See Zoo Overview", "See List of Hungry Animals", "See List of Unhappy Animals", "Add Animal", "Remove Animal", "Search", "Log off", "Exit"}, "Zookeeper", zoo);
+        super(new String[]{"See Zoo Overview", "See List of Hungry Animals", "Feed Animals", "Add Animal", "Remove Animal", "Search", "Log off"}, "Zookeeper", zoo);
     }
 
-    public void printAnimals() {
-        for (Animal animal : getZoo().getAnimals()) {
-            printMessage(animal.getInformation());
-        }
+    private void printAllAnimals() {
+        printMessage(getZoo().getAnimalsOverview());
     }
 
     public void printHungryAnimals() {
-        System.out.println("The following animals are hungry and need feeding\n");
-        for (Animal animal : getZoo().getAnimals()) {
-            if (animal.getHunger() < 50)
-                printMessage(animal.getInformation());
+        printMessage("The following animals are hungry and need feeding\n");
+    }
+
+    public void addAnimal() {
+        ArrayList<String> animalTypes = getZoo().getAnimalTypes();
+        printIndexedCommands(animalTypes);
+        int userInput = getIntegerInput(animalTypes.size());
+
+        if (userInput == 1) {
+            getZoo().addAnimal(AnimalTypes.Lion);
+        } else if (userInput == 2) {
+            getZoo().addAnimal(AnimalTypes.Llama);
+        } else {
+            getZoo().addAnimal(AnimalTypes.Crocodile);
         }
     }
 
-    public void printUnhappyAnimals() {
-        System.out.println("The following animals are severely unhappy and need attention\n");
-        for (Animal animal : getZoo().getAnimals()) {
-            if (animal.getHappiness() < 20)
-                printMessage(animal.getInformation());
-        }
-    }
-
-    public String getAnimalType() {
-        System.out.println("What type of animal are you looking to add?");
-        return getStringInput();
-    }
-
-
-    public Animal getAnimalById() {
-        Animal desiredAnimal = null;
+    public void removeAnimal() {
         printMessage("Type the ID of the animal you would like to remove");
-        String id = getStringInput();
-        for (Animal animal : getZoo().getAnimals()) {
-            if (animal.getId().equals(id)) {
-                desiredAnimal = animal;
-                System.out.println("Animal found");
-            }
+        String userInput = getStringInput();
+        boolean isRemoved = getZoo().removeAnimal(userInput);
+        if (isRemoved) {
+            printMessage("Successfully removed animal");
+        } else {
+            printMessage("Unable to remove animal");
         }
-        return desiredAnimal;
     }
 
     public void searchZoo() {
         printMessage("Enter search term below");
         String searchTerm = getStringInput();
 
-        ArrayList<String> searchResults = getZoo().search(searchTerm);
+        ArrayList<String> searchResults = getZoo().searchZoo(searchTerm);
 
-        for (String searchResult : searchResults) {
-            printMessage(searchResult);
+        if (searchResults.size() > 0) {
+            printMessage("Successfully found these matches:");
+            for (String searchResult : searchResults) {
+                printMessage(searchResult);
+            }
+        } else {
+            printMessage("Unable to find any matches");
         }
     }
-
 
     @Override
     public void printCommands() {
@@ -80,19 +76,19 @@ public class ZookeeperCommands extends Commands {
             int userSelection = getIntegerInput();
 
             if (userSelection == 1) {
-                printAnimals();
+                printAllAnimals();
             } else if (userSelection == 2) {
                 printHungryAnimals();
             } else if (userSelection == 3) {
-                printUnhappyAnimals();
+
             } else if (userSelection == 4) {
-                getZoo().addAnimal(getAnimalType());
+                addAnimal();
             } else if (userSelection == 5) {
-                getZoo().removeAnimal(getAnimalById());
+                removeAnimal();
             } else if (userSelection == 6) {
                 searchZoo();
             } else {
-                setNextCommands(CommandNames.Exit);
+                setNextCommands(CommandNames.Login);
                 isActive = false;
             }
         }
