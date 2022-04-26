@@ -4,6 +4,8 @@ package com.company;
 // PREPOPULATE VISITORS + ZOO-KEEPERS
 // RANDOMISE THE ANIMALS
 
+import com.company.animals.*;
+
 public class ZooFactory {
 
     public static Animal createAnimal(AnimalTypes animal, int index) {

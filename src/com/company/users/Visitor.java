@@ -1,4 +1,6 @@
-package com.company;
+package com.company.users;
+
+import com.company.users.User;
 
 public class Visitor extends User {
     private int animalTokens;

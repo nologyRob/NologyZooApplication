@@ -1,4 +1,4 @@
-package com.company;
+package com.company.animals;
 
 public class Llama extends Animal {
     public Llama(String name) {

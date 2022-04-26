@@ -1,15 +1,20 @@
-package com.company;
+package com.company.commands;
 
-import java.util.ArrayList;
+import com.company.Zoo;
+import com.company.animals.AnimalTypes;
+
+import java.util.List;
 
 public class ZookeeperCommands extends Commands {
+    private final Zoo zoo;
 
     public ZookeeperCommands(Zoo zoo) {
-        super(new String[]{"See Zoo Overview", "See List of Hungry Animals", "Feed Animals", "Add Animal", "Remove Animal", "Search", "Log off"}, "Zookeeper", zoo);
+        super(new String[]{"See Zoo Overview", "See List of Hungry Animals", "Feed Animals", "Add Animal", "Remove Animal", "Search", "Log off"}, "Zookeeper");
+        this.zoo = zoo;
     }
 
     private void printAllAnimals() {
-        printMessage(getZoo().getAllAnimalsInformation());
+        printMessage(zoo.getAllAnimalsInformation());
     }
 
     public void printHungryAnimals() {
@@ -17,22 +22,22 @@ public class ZookeeperCommands extends Commands {
     }
 
     public void addAnimal() {
-        ArrayList<String> animalTypes = getZoo().getAnimalTypes();
+        List<String> animalTypes = zoo.getAnimalTypes();
         printIndexedCommands(animalTypes);
         int userInput = getIntegerInput(animalTypes.size());
 
         if (userInput == 1) {
-            getZoo().createAnimal(AnimalTypes.Lion);
+            zoo.createAnimal(AnimalTypes.Lion);
         } else if (userInput == 2) {
-            getZoo().createAnimal(AnimalTypes.Llama);
+            zoo.createAnimal(AnimalTypes.Llama);
         } else {
-            getZoo().createAnimal(AnimalTypes.Crocodile);
+            zoo.createAnimal(AnimalTypes.Crocodile);
         }
     }
 
     public void removeAnimal() {
         String userInput = getStringInput("Type the ID of the animal you would like to remove");
-        boolean isRemoved = getZoo().removeAnimal(userInput);
+        boolean isRemoved = zoo.removeAnimal(userInput);
         if (isRemoved) {
             printMessage("Successfully removed animal");
         } else {
@@ -43,7 +48,7 @@ public class ZookeeperCommands extends Commands {
     public void searchZoo() {
         String searchTerm = getStringInput("Enter search term below");
 
-        ArrayList<String> searchResults = getZoo().searchZoo(searchTerm);
+        List<String> searchResults = zoo.searchZoo(searchTerm);
 
         if (searchResults.size() > 0) {
             printMessage("Successfully found these matches:");
@@ -78,7 +83,8 @@ public class ZookeeperCommands extends Commands {
             } else if (userSelection == 2) {
                 printHungryAnimals();
             } else if (userSelection == 3) {
-
+                // NEED TO DO SOMETHING ELSE
+                System.out.println("DOING SOMETHING");
             } else if (userSelection == 4) {
                 addAnimal();
             } else if (userSelection == 5) {
