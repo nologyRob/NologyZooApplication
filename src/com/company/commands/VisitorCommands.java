@@ -1,20 +1,27 @@
-package com.company;
+package com.company.commands;
+
+import com.company.Zoo;
 
 public class VisitorCommands extends Commands {
+    private final Zoo zoo;
+
 
     public VisitorCommands(Zoo zoo) {
-        super(new String[]{"See Zoo Overview", "Visit Animal", "Edit Information", "Log off"}, "Visitor", zoo);
+        super(new String[]{"See Zoo Overview", "Visit Animal", "Edit Information", "Log off"}, "Visitor");
+        this.zoo = zoo;
     }
 
     public void printOverview() {
-        printMessage(getZoo().getZooOverview());
+        printMessage(zoo.getZooOverview());
     }
 
     public void updateUser() {
-        User user = getZoo().getCurrentUser();
-        printMessage("Hello " + user.getName());
+        printMessage("Hello " + zoo.getUsersName());
+
         String newName = getStringInput("Enter your new name below");
-        user.setName(newName);
+
+        zoo.updateUser(newName);
+
         printMessage("Your name has been updated");
     }
 
@@ -44,7 +51,7 @@ public class VisitorCommands extends Commands {
             } else if (userSelection == 3) {
                 updateUser();
             } else {
-                getZoo().logOut();
+                zoo.logOut();
                 setNextCommands(CommandNames.Login);
                 isActive = false;
             }

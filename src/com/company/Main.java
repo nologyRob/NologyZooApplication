@@ -1,19 +1,16 @@
 package com.company;
 
-// TODO
-// ZooKeeper -
-// Visitor - View Pen Stats, Feed all, Gain Pen Badge?
-// ZooKeeper - View Pen Stats Feed all, Add / Remove animal
+import com.company.commands.*;
 
 public class Main {
 
     public static void main(String[] args) {
         Zoo zoo = new Zoo();
 
-        LoginCommands loginCommands = new LoginCommands(zoo);
-        VisitorCommands visitorCommands = new VisitorCommands(zoo);
-        AnimalCommands animalCommands = new AnimalCommands(zoo);
-        ZookeeperCommands zookeeperCommands = new ZookeeperCommands(zoo);
+        Commands loginCommands = new LoginCommands(zoo);
+        Commands visitorCommands = new VisitorCommands(zoo);
+        Commands animalCommands = new AnimalCommands(zoo);
+        Commands zookeeperCommands = new ZookeeperCommands(zoo);
 
         Commands currentCommands = loginCommands;
         boolean isRunning = true;

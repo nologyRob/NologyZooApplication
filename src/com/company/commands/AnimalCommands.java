@@ -1,41 +1,43 @@
-package com.company;
+package com.company.commands;
 
-import java.util.ArrayList;
+import com.company.Zoo;
+import com.company.animals.Animal;
+import com.company.animals.AnimalTypes;
+
+import java.util.List;
 
 public class AnimalCommands extends Commands {
-
-    // TODO
-    // CLEAN UP -> VISITING ANIMALS
-    // ZOO KEEPER???????
+    private final Zoo zoo;
 
     public AnimalCommands(Zoo zoo) {
-        super(new String[]{"View All Animals", "View By Animal Type", "Visit Animal", "Visit Random Animal", "Go Back"}, "Animal", zoo);
+        super(new String[]{"View All Animals", "View By Animal Type", "Visit Animal", "Visit Random Animal", "Go Back"}, "Animal");
+        this.zoo = zoo;
     }
 
     private void printAllAnimals() {
-        printMessage(getZoo().getAllAnimalsInformation());
+        printMessage(zoo.getAllAnimalsInformation());
     }
 
     private void printAnimalsByType() {
         printMessage("Select a Type of Animal:");
-        ArrayList<String> animalTypes = getZoo().getAnimalTypes();
+        List<String> animalTypes = zoo.getAnimalTypes();
 
         printIndexedCommands(animalTypes);
 
-        ArrayList<Animal> selectedAnimalsByType;
+        List<Animal> selectedAnimalsByType;
 
         int userSelection = getIntegerInput(animalTypes.size());
 
         String message;
 
         if (userSelection == 1) {
-            selectedAnimalsByType = getZoo().getAnimalsByType(AnimalTypes.Lion);
+            selectedAnimalsByType = zoo.getAnimalsByType(AnimalTypes.Lion);
             message = "We have the following " + AnimalTypes.Lion + "s in the Zoo.";
         } else if (userSelection == 2) {
-            selectedAnimalsByType = getZoo().getAnimalsByType(AnimalTypes.Llama);
+            selectedAnimalsByType = zoo.getAnimalsByType(AnimalTypes.Llama);
             message = "We have the following " + AnimalTypes.Llama + "s in the Zoo.";
         } else {
-            selectedAnimalsByType = getZoo().getAnimalsByType(AnimalTypes.Crocodile);
+            selectedAnimalsByType = zoo.getAnimalsByType(AnimalTypes.Crocodile);
             message = "We have the following " + AnimalTypes.Crocodile + "s in the Zoo.";
         }
 
@@ -43,13 +45,11 @@ public class AnimalCommands extends Commands {
         selectedAnimalsByType.forEach(animal -> printMessage(animal.getInformation()));
     }
 
-    // TODO
-    // NEEDS WORK :S
     private void visitAnimal() {
         String animalId;
         animalId = getStringInput("Enter the animal ID below:");
 
-        if (getZoo().animalExists(animalId)) {
+        if (zoo.hasAnimal(animalId)) {
             interactWithAnimal(animalId);
         } else {
             printMessage("Animal not found...");
@@ -57,7 +57,7 @@ public class AnimalCommands extends Commands {
     }
 
     private void visitRandomAnimal() {
-        interactWithAnimal(getZoo().getRandomAnimalId());
+        interactWithAnimal(zoo.getRandomAnimalId());
     }
 
     private void interactWithAnimal(String animalId) {
@@ -66,17 +66,17 @@ public class AnimalCommands extends Commands {
 
         while (isActive) {
 
-            printMessage(getZoo().getAnimalInformation(animalId));
+            printMessage(zoo.getAnimalInformation(animalId));
 
             printIndexedCommands(new String[]{"Pet", "Give token", "Go back"});
 
             int userSelection = getIntegerInput(3);
 
             if (userSelection == 1) {
-                boolean hasPet = getZoo().petAnimal(animalId);
+                boolean hasPet = zoo.petAnimal(animalId);
                 printMessage(hasPet ? "Successful petting" : "Unsuccessful petting");
             } else if (userSelection == 2) {
-                boolean hasSpentToken = getZoo().spendAnimalToken(animalId);
+                boolean hasSpentToken = zoo.spendAnimalToken(animalId);
                 printMessage(hasSpentToken ? "Animal token spent" : "No tokens left to spend");
             } else {
                 isActive = false;
