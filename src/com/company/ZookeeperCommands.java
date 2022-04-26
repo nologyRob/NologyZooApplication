@@ -9,7 +9,7 @@ public class ZookeeperCommands extends Commands {
     }
 
     private void printAllAnimals() {
-        printMessage(getZoo().getAnimalsOverview());
+        printMessage(getZoo().getAllAnimalsInformation());
     }
 
     public void printHungryAnimals() {
@@ -22,17 +22,16 @@ public class ZookeeperCommands extends Commands {
         int userInput = getIntegerInput(animalTypes.size());
 
         if (userInput == 1) {
-            getZoo().addAnimal(AnimalTypes.Lion);
+            getZoo().createAnimal(AnimalTypes.Lion);
         } else if (userInput == 2) {
-            getZoo().addAnimal(AnimalTypes.Llama);
+            getZoo().createAnimal(AnimalTypes.Llama);
         } else {
-            getZoo().addAnimal(AnimalTypes.Crocodile);
+            getZoo().createAnimal(AnimalTypes.Crocodile);
         }
     }
 
     public void removeAnimal() {
-        printMessage("Type the ID of the animal you would like to remove");
-        String userInput = getStringInput();
+        String userInput = getStringInput("Type the ID of the animal you would like to remove");
         boolean isRemoved = getZoo().removeAnimal(userInput);
         if (isRemoved) {
             printMessage("Successfully removed animal");
@@ -42,8 +41,7 @@ public class ZookeeperCommands extends Commands {
     }
 
     public void searchZoo() {
-        printMessage("Enter search term below");
-        String searchTerm = getStringInput();
+        String searchTerm = getStringInput("Enter search term below");
 
         ArrayList<String> searchResults = getZoo().searchZoo(searchTerm);
 

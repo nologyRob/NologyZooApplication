@@ -36,30 +36,7 @@ abstract public class Commands {
     }
 
     public int getIntegerInput() {
-        boolean isActive = true;
-        int input = 0;
-
-        while (isActive) {
-            boolean hasNextInt = scanner.hasNextInt();
-
-            if (hasNextInt) {
-                int userInput = scanner.nextInt();
-
-                if (userInput > 0 && userInput <= commands.length) {
-                    input = userInput;
-                    isActive = false;
-                } else {
-                    printMessage("Enter a number between 1 - " + commands.length);
-                }
-
-            } else {
-                printMessage("Unable to understand input, try again");
-                scanner.nextLine();
-            }
-        }
-        // NEED THIS TO STOP IT SKIPPING WHEN YOU USE THE GET STRING INPUT
-        scanner.nextLine();
-        return input;
+        return getIntegerInput(commands.length);
     }
 
     public int getIntegerInput(int limit) {
@@ -94,18 +71,16 @@ abstract public class Commands {
         System.out.println(message);
     }
 
-    // LOOPING
-    protected void printIndexedCommands() {
+
+    // METHOD OVERLOADING + LOOPING
+    protected void printIndexedCommands(String[] commands) {
         for (int i = 0; i < commands.length; i++) {
             printMessage((i + 1) + ":" + commands[i]);
         }
     }
 
-    // METHOD OVERLOADING +
-    protected void printIndexedCommands(String[] commands) {
-        for (int i = 0; i < commands.length; i++) {
-            printMessage((i + 1) + ":" + commands[i]);
-        }
+    protected void printIndexedCommands() {
+        printIndexedCommands(commands);
     }
 
     protected void printIndexedCommands(ArrayList<String> commands) {
@@ -114,8 +89,10 @@ abstract public class Commands {
         }
     }
 
+    protected String getStringInput(String message) {
 
-    protected String getStringInput() {
+        printMessage(message);
+
         boolean isActive = true;
 
         String input = "";

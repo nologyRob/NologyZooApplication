@@ -9,11 +9,11 @@ public class AnimalCommands extends Commands {
     // ZOO KEEPER???????
 
     public AnimalCommands(Zoo zoo) {
-        super(new String[]{"View All Animals", "View By Species", "Visit Animal", "Visit Random Animal", "Go Back"}, "Animal", zoo);
+        super(new String[]{"View All Animals", "View By Animal Type", "Visit Animal", "Visit Random Animal", "Go Back"}, "Animal", zoo);
     }
 
     private void printAllAnimals() {
-        printMessage(getZoo().getAnimalsOverview());
+        printMessage(getZoo().getAllAnimalsInformation());
     }
 
     private void printAnimalsByType() {
@@ -29,13 +29,13 @@ public class AnimalCommands extends Commands {
         String message;
 
         if (userSelection == 1) {
-            selectedAnimalsByType = getZoo().getAnimalByType(AnimalTypes.Lion);
+            selectedAnimalsByType = getZoo().getAnimalsByType(AnimalTypes.Lion);
             message = "We have the following " + AnimalTypes.Lion + "s in the Zoo.";
         } else if (userSelection == 2) {
-            selectedAnimalsByType = getZoo().getAnimalByType(AnimalTypes.Llama);
+            selectedAnimalsByType = getZoo().getAnimalsByType(AnimalTypes.Llama);
             message = "We have the following " + AnimalTypes.Llama + "s in the Zoo.";
         } else {
-            selectedAnimalsByType = getZoo().getAnimalByType(AnimalTypes.Crocodile);
+            selectedAnimalsByType = getZoo().getAnimalsByType(AnimalTypes.Crocodile);
             message = "We have the following " + AnimalTypes.Crocodile + "s in the Zoo.";
         }
 
@@ -47,10 +47,9 @@ public class AnimalCommands extends Commands {
     // NEEDS WORK :S
     private void visitAnimal() {
         String animalId;
-        printMessage("Enter the animal ID below:");
-        animalId = getStringInput();
+        animalId = getStringInput("Enter the animal ID below:");
 
-        if (getZoo().hasAnimal(animalId)) {
+        if (getZoo().animalExists(animalId)) {
             interactWithAnimal(animalId);
         } else {
             printMessage("Animal not found...");
@@ -79,6 +78,7 @@ public class AnimalCommands extends Commands {
             } else {
                 isActive = false;
             }
+
         }
     }
 

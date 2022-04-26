@@ -6,6 +6,7 @@ import java.util.HashMap;
 // TODO
 // HASH SET -> USERNAMES?
 // ADD VISITORS IN ZOO FACTORY
+// REFACTOR LOGIN?
 
 public class Zoo {
 
@@ -35,6 +36,81 @@ public class Zoo {
         ZooFactory.populateZoo(this);
     }
 
+    // --- LOGIN / LOGOUT ---
+
+    public void createVisitor(String name, String password) {
+        Visitor visitor = new Visitor(name, password);
+        visitors.add(visitor);
+        currentUser = visitor;
+    }
+
+    public void logOut() {
+        currentUser = null;
+    }
+
+    public boolean logInVisitor(String name, String password) {
+        for (Visitor visitor : visitors) {
+            if (visitor.authenticate(name, password)) {
+                currentUser = visitor;
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public boolean logInZookeeper(String name, String password) {
+        for (Zookeeper zookeeper : zookeepers) {
+            if (zookeeper.authenticate(name, password)) {
+                currentUser = zookeeper;
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    // --- CREATE ---
+
+    public void addAnimalTypes(String animalType) {
+        this.animalTypes.add(animalType);
+    }
+
+    public void createAnimal(AnimalTypes animalType) {
+        int numberOfAnimals = animalsByTypeLookup.get(animalType.toString()).size();
+        Animal animal = ZooFactory.createAnimal(animalType, numberOfAnimals);
+        addAnimal(animal);
+    }
+
+    public void addAnimal(Animal animal) {
+        animals.add(animal);
+        addToAnimalLookup(animal);
+        addToAnimalsByTypeLookup(animal);
+    }
+
+    private void addToAnimalLookup(Animal animal) {
+        String animalId = animal.getId();
+        animalLookup.put(animalId, animal);
+    }
+
+    private void addToAnimalsByTypeLookup(Animal animal) {
+        String animalType = animal.getType();
+
+        if (animalsByTypeLookup.containsKey(animalType)) {
+            animalsByTypeLookup.get(animalType).add(animal);
+        } else {
+            ArrayList<Animal> species = new ArrayList<>();
+            species.add(animal);
+            animalsByTypeLookup.put(animalType, species);
+        }
+    }
+
+    // --- READ ---
+
+    public User getCurrentUser() {
+        return currentUser;
+    }
+
     public ArrayList<String> searchZoo(String searchTerm) {
 
         ArrayList<String> searchResults = new ArrayList<String>();
@@ -53,8 +129,21 @@ public class Zoo {
         return searchResults;
     }
 
-    public boolean hasAnimal(String animalId) {
+    public boolean animalExists(String animalId) {
         return animalLookup.containsKey(animalId);
+    }
+
+    public ArrayList<Animal> getAnimalsByType(AnimalTypes animalType) {
+        switch (animalType) {
+            case Lion:
+                return animalsByTypeLookup.get(AnimalTypes.Lion.toString());
+            case Llama:
+                return animalsByTypeLookup.get(AnimalTypes.Llama.toString());
+            case Crocodile:
+                return animalsByTypeLookup.get(AnimalTypes.Crocodile.toString());
+            default:
+                return null;
+        }
     }
 
     public String getRandomAnimalId() {
@@ -62,9 +151,37 @@ public class Zoo {
         return animals.get(index).getId();
     }
 
+    public ArrayList<String> getAnimalTypes() {
+        return animalTypes;
+    }
+
+    public String getZooOverview() {
+        return String.format("The Zoo currently has %d animals.\nThe Zoo currently has %d visitors.\nThe Current user is %s.", animals.size(), visitors.size(), currentUser.getName());
+    }
+
+    public String getAnimalInformation(String animalId) {
+        Animal animal = animalLookup.get(animalId);
+        return animal.getInformation();
+    }
+
+    public String getAllAnimalsInformation() {
+        StringBuilder animalOverview = new StringBuilder();
+
+        for (Animal animal : animals) {
+            animalOverview.append(animal.getInformation());
+            animalOverview.append("\n");
+        }
+
+        return animalOverview.toString();
+    }
+
+    // --- UPDATE ---
+
     public boolean petAnimal(String animalId) {
         Animal animal = animalLookup.get(animalId);
         Visitor currentVisitor = (Visitor) this.currentUser;
+
+        animal.makeSound();
 
         if (animal.isCanPet()) {
             animal.pet();
@@ -74,6 +191,7 @@ public class Zoo {
             currentVisitor.decrementHappiness();
             return false;
         }
+
     }
 
     public boolean spendAnimalToken(String animalId) {
@@ -92,115 +210,7 @@ public class Zoo {
 
     }
 
-    public void addAnimal(Animal animal) {
-        animals.add(animal);
-        addAnimalsByTypeLookup(animal);
-        addToAnimalLookup(animal);
-    }
-
-    private void addToAnimalLookup(Animal animal) {
-        String animalId = animal.getId();
-        animalLookup.put(animalId, animal);
-    }
-
-    private void addAnimalsByTypeLookup(Animal animal) {
-        String animalType = animal.getType();
-
-        if (animalsByTypeLookup.containsKey(animalType)) {
-            animalsByTypeLookup.get(animalType).add(animal);
-        } else {
-            ArrayList<Animal> species = new ArrayList<>();
-            species.add(animal);
-            animalsByTypeLookup.put(animalType, species);
-        }
-    }
-
-    public void addAnimalTypes(String animalType) {
-        this.animalTypes.add(animalType);
-    }
-
-    public ArrayList<Animal> getAnimalByType(AnimalTypes animalType) {
-        switch (animalType) {
-            case Lion:
-                return animalsByTypeLookup.get(AnimalTypes.Lion.toString());
-            case Llama:
-                return animalsByTypeLookup.get(AnimalTypes.Llama.toString());
-            case Crocodile:
-                return animalsByTypeLookup.get(AnimalTypes.Crocodile.toString());
-            default:
-                return null;
-        }
-    }
-
-    public ArrayList<String> getAnimalTypes() {
-        return animalTypes;
-    }
-
-    public void addAnimal(AnimalTypes animalType) {
-        int numberOfAnimals = animalsByTypeLookup.get(animalType.toString()).size();
-        Animal animal = ZooFactory.createAnimal(animalType, numberOfAnimals);
-        addAnimal(animal);
-    }
-
-    public User getCurrentUser() {
-        return currentUser;
-    }
-
-    private void setCurrentUser(User currentUser) {
-        this.currentUser = currentUser;
-    }
-
-    public void addVisitor(Visitor visitor) {
-        visitors.add(visitor);
-    }
-
-    public void createVisitor(String name, String password) {
-        Visitor visitor = new Visitor(name, password);
-        addVisitor(visitor);
-        setCurrentUser(visitor);
-    }
-
-    public void logOut() {
-        setCurrentUser(null);
-    }
-
-    public boolean logInVisitor(String name, String password) {
-        for (Visitor visitor : visitors) {
-            if (visitor.authenticate(name, password)) {
-                setCurrentUser(visitor);
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    public boolean logInZookeeper(String name, String password) {
-        for (Zookeeper zookeeper : zookeepers) {
-            if (zookeeper.authenticate(name, password)) {
-                setCurrentUser(zookeeper);
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    public String getZooOverview() {
-        return String.format("The Zoo currently has %d animals.\nThe Zoo currently has %d visitors.\nThe Current user is %s.", animals.size(), visitors.size(), currentUser.getName());
-    }
-
-    public String getAnimalsOverview() {
-        StringBuilder animalOverview = new StringBuilder();
-
-        for (Animal animal : animals) {
-            animalOverview.append(animal.getInformation());
-            animalOverview.append("\n");
-        }
-
-        return animalOverview.toString();
-    }
-
+    // --- DELETE ---
 
     public boolean removeAnimal(String animalId) {
         if (animalLookup.containsKey(animalId)) {
@@ -213,4 +223,5 @@ public class Zoo {
             return false;
         }
     }
+
 }

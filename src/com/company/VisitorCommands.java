@@ -3,18 +3,17 @@ package com.company;
 public class VisitorCommands extends Commands {
 
     public VisitorCommands(Zoo zoo) {
-        super(new String[]{"See Zoo Overview", "Visit Animal", "Edit Information", "Log off", "Exit"}, "Visitor", zoo);
+        super(new String[]{"See Zoo Overview", "Visit Animal", "Edit Information", "Log off"}, "Visitor", zoo);
     }
 
     public void printOverview() {
-     printMessage(getZoo().getZooOverview());
+        printMessage(getZoo().getZooOverview());
     }
 
     public void updateUser() {
         User user = getZoo().getCurrentUser();
         printMessage("Hello " + user.getName());
-        printMessage("Enter your new name below");
-        String newName = getStringInput();
+        String newName = getStringInput("Enter your new name below");
         user.setName(newName);
         printMessage("Your name has been updated");
     }
@@ -44,12 +43,9 @@ public class VisitorCommands extends Commands {
                 isActive = false;
             } else if (userSelection == 3) {
                 updateUser();
-            } else if (userSelection == 4) {
+            } else {
                 getZoo().logOut();
                 setNextCommands(CommandNames.Login);
-                isActive = false;
-            } else {
-                setNextCommands(CommandNames.Exit);
                 isActive = false;
             }
         }
