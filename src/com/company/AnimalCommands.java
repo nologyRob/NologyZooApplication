@@ -65,6 +65,9 @@ public class AnimalCommands extends Commands {
         boolean isActive = true;
 
         while (isActive) {
+
+            printMessage(getZoo().getAnimalInformation(animalId));
+
             printIndexedCommands(new String[]{"Pet", "Give token", "Go back"});
 
             int userSelection = getIntegerInput(3);

@@ -78,7 +78,7 @@ public class ZookeeperCommands extends Commands {
             } else if (userSelection == 2) {
                 printHungryAnimals();
             } else if (userSelection == 3) {
-
+                // NEED TO DO SOMETHING
             } else if (userSelection == 4) {
                 addAnimal();
             } else if (userSelection == 5) {
