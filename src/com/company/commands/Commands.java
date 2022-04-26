@@ -1,6 +1,6 @@
-package com.company;
+package com.company.commands;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -8,19 +8,13 @@ abstract public class Commands {
     private final Scanner scanner;
     private final String[] commands;
     private final String name;
-    private final Zoo zoo;
     private CommandNames nextCommands;
 
-    public Commands(String[] commands, String name, Zoo zoo) {
+    public Commands(String[] commands, String name) {
         this.scanner = new Scanner(System.in);
         this.nextCommands = CommandNames.Exit;
         this.commands = commands;
         this.name = name;
-        this.zoo = zoo;
-    }
-
-    public Zoo getZoo() {
-        return zoo;
     }
 
     public String getName() {
@@ -83,7 +77,7 @@ abstract public class Commands {
         printIndexedCommands(commands);
     }
 
-    protected void printIndexedCommands(ArrayList<String> commands) {
+    protected void printIndexedCommands(List<String> commands) {
         for (int i = 0; i < commands.size(); i++) {
             printMessage((i + 1) + ":" + commands.get(i));
         }

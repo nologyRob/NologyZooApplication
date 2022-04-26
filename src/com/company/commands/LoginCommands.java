@@ -1,18 +1,23 @@
-package com.company;
+package com.company.commands;
 
 
 // TODO
 // ONE LOG METHOD
 
+import com.company.Zoo;
+
 public class LoginCommands extends Commands {
+    private final Zoo zoo;
+
     public LoginCommands(Zoo zoo) {
-        super(new String[]{"Create a new Visitor", "Login as Visitor", "Login as Zoo Keeper", "Exit"}, "login", zoo);
+        super(new String[]{"Create a new Visitor", "Login as Visitor", "Login as Zoo Keeper", "Exit"}, "login");
+        this.zoo = zoo;
     }
 
     public void createVisitor() {
         String name = getStringInput("Enter Name below:");
         String password = getStringInput("Enter Password below:");
-        getZoo().createVisitor(name, password);
+        zoo.createVisitor(name, password);
     }
 
     public boolean loginVisitor() {
@@ -22,7 +27,7 @@ public class LoginCommands extends Commands {
         while (isActive) {
             String name = getStringInput("Enter Name below:");
             String password = getStringInput("Enter Password below:");
-            isLoggedIn = getZoo().logInVisitor(name, password);
+            isLoggedIn = zoo.logInVisitor(name, password);
 
             if (isLoggedIn) {
                 isActive = false;
@@ -49,7 +54,7 @@ public class LoginCommands extends Commands {
         while (isActive) {
             String name = getStringInput("Enter Name below:");
             String password = getStringInput("Enter Password below:");
-            isLoggedIn = getZoo().logInZookeeper(name, password);
+            isLoggedIn = zoo.logInZookeeper(name, password);
 
             if (isLoggedIn) {
                 isActive = false;

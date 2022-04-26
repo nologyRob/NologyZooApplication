@@ -1,4 +1,6 @@
-package com.company;
+package com.company.animals;
+
+import com.company.Searchable;
 
 import java.util.UUID;
 

@@ -1,4 +1,4 @@
-package com.company;
+package com.company.users;
 
 public class Zookeeper extends User {
 

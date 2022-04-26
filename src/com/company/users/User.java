@@ -1,10 +1,10 @@
-package com.company;
+package com.company.users;
 
-import java.time.LocalDateTime;
+import com.company.Searchable;
+
 import java.util.UUID;
 
-abstract class User implements Searchable {
-    private final LocalDateTime dateEntered;
+public abstract class User implements Searchable {
     private final boolean isStaff;
     private final String id;
     private final String password;
@@ -13,7 +13,6 @@ abstract class User implements Searchable {
     public User(String name, boolean isStaff, String password) {
         this.name = name;
         this.isStaff = isStaff;
-        this.dateEntered = LocalDateTime.now();
         this.id = UUID.randomUUID().toString();
         this.password = password;
     }
