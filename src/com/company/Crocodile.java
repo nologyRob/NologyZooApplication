@@ -5,4 +5,8 @@ public class Crocodile extends Animal {
         super(name, AnimalTypes.Crocodile.toString(), false);
     }
 
+    @Override
+    public void makeSound() {
+        System.out.println("Hiss, Hiss");
+    }
 }

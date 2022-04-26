@@ -65,5 +65,7 @@ public abstract class Animal implements Searchable {
     public boolean isMatch(String toMatch) {
         return name.contains(toMatch) || id.contains(toMatch) || type.contains(toMatch);
     }
+
+    public abstract void makeSound();
 }
 

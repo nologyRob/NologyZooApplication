@@ -2,23 +2,17 @@ package com.company;
 
 
 // TODO
-// LOG IN AS ZOO KEEPER
+// ONE LOG METHOD
 
 public class LoginCommands extends Commands {
-
     public LoginCommands(Zoo zoo) {
         super(new String[]{"Create a new Visitor", "Login as Visitor", "Login as Zoo Keeper", "Exit"}, "login", zoo);
     }
 
     public void createVisitor() {
-        String name = getCredentials("Enter Name below:");
-        String password = getCredentials("Enter Password below:");
+        String name = getStringInput("Enter Name below:");
+        String password = getStringInput("Enter Password below:");
         getZoo().createVisitor(name, password);
-    }
-
-    public String getCredentials(String message) {
-        printMessage(message);
-        return getStringInput();
     }
 
     public boolean loginVisitor() {
@@ -26,8 +20,8 @@ public class LoginCommands extends Commands {
         boolean isLoggedIn = false;
 
         while (isActive) {
-            String name = getCredentials("Enter Name below:");
-            String password = getCredentials("Enter Password below:");
+            String name = getStringInput("Enter Name below:");
+            String password = getStringInput("Enter Password below:");
             isLoggedIn = getZoo().logInVisitor(name, password);
 
             if (isLoggedIn) {
@@ -53,8 +47,8 @@ public class LoginCommands extends Commands {
         boolean isLoggedIn = false;
 
         while (isActive) {
-            String name = getCredentials("Enter Name below:");
-            String password = getCredentials("Enter Password below:");
+            String name = getStringInput("Enter Name below:");
+            String password = getStringInput("Enter Password below:");
             isLoggedIn = getZoo().logInZookeeper(name, password);
 
             if (isLoggedIn) {

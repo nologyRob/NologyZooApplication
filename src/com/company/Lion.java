@@ -6,4 +6,8 @@ public class Lion extends Animal {
         super(name, AnimalTypes.Lion.toString(), false);
     }
 
+    @Override
+    public void makeSound() {
+        System.out.println("Grrrrrrrrr");
+    }
 }
