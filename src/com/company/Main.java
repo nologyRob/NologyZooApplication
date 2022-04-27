@@ -2,11 +2,13 @@ package com.company;
 
 import com.company.commands.*;
 
+import java.io.FileNotFoundException;
+
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
         Zoo zoo = new Zoo();
-
+        
         Commands loginCommands = new LoginCommands(zoo);
         Commands visitorCommands = new VisitorCommands(zoo);
         Commands animalCommands = new AnimalCommands(zoo);
