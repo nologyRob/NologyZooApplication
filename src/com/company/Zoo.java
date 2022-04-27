@@ -6,6 +6,7 @@ import com.company.users.User;
 import com.company.users.Visitor;
 import com.company.users.Zookeeper;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -45,7 +46,7 @@ public class Zoo {
 
     private User currentUser;
 
-    public Zoo() {
+    public Zoo() throws FileNotFoundException {
         this.currentUser = null;
         this.animals = new ArrayList<>();
         this.visitors = new ArrayList<>();

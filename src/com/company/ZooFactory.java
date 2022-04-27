@@ -6,6 +6,9 @@ package com.company;
 
 import com.company.animals.*;
 
+import java.io.FileNotFoundException;
+import java.util.Map;
+
 public class ZooFactory {
 
     public static Animal createAnimal(AnimalTypes animal, int index) {
@@ -25,19 +28,37 @@ public class ZooFactory {
         }
     }
 
-    public static void populateZoo(Zoo zoo) {
+    public static void populateZoo(Zoo zoo) throws FileNotFoundException {
+        Map<String, Integer> animalCountDictionary = CSVReader.createDictionaryFromCSV("animal-count.csv");
 
-        for (int i = 0; i < 10; i++) {
-            Animal lion = createAnimal(AnimalTypes.Lion, i);
-            Animal llama = createAnimal(AnimalTypes.Llama, i);
-            Animal crocodile = createAnimal(AnimalTypes.Crocodile, i);
+        int lionCount = animalCountDictionary.get("lion");
+        int llamaCount = animalCountDictionary.get("llama");
+        int crocodileCount = animalCountDictionary.get("crocodile");
 
-            zoo.addAnimal(lion);
-            zoo.addAnimal(llama);
-            zoo.addAnimal(crocodile);
+        while (lionCount > 0 || llamaCount > 0 || crocodileCount > 0) {
+            if (lionCount > 0) {
+                Animal lion = createAnimal(AnimalTypes.Lion, lionCount);
+                zoo.addAnimal(lion);
+                lionCount--;
+            }
+
+            if (llamaCount > 0) {
+                Animal llama = createAnimal(AnimalTypes.Llama, llamaCount);
+                zoo.addAnimal(llama);
+                llamaCount--;
+            }
+
+            if (crocodileCount > 0) {
+                Animal crocodile = createAnimal(AnimalTypes.Crocodile, crocodileCount);
+                zoo.addAnimal(crocodile);
+                crocodileCount--;
+            }
+
         }
 
         populateAnimalTypes(zoo);
     }
 
 }
+
+
