@@ -8,11 +8,12 @@ import com.company.users.Auth;
 
 public class LoginCommands extends Commands {
     private final Zoo zoo;
-    private Auth authentication = new Auth();
+    private Auth authentication;
 
-    public LoginCommands(Zoo zoo) {
+    public LoginCommands(Zoo zoo, Auth authentication) {
         super(new String[]{"Create a new Visitor", "Login as Visitor", "Login as Zoo Keeper", "Exit"}, "login");
         this.zoo = zoo;
+        this.authentication = authentication;
     }
 
     private void createVisitor() {

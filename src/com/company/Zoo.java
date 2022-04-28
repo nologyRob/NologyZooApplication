@@ -28,7 +28,7 @@ public class Zoo {
     // NOT TIED TO A CONCRETE IMPLEMENTATION -> DEPENDENCY INVERSION
     private final List<Animal> animals;
     private final List<String> animalTypes;
-    private final Auth authentication = new Auth();
+    private final Auth authentication;
 
     // LOOK UP ANIMAL BY ID -> CACHED
     // LOOK UP ANIMALS BY TYPE / SPECIES
@@ -37,12 +37,12 @@ public class Zoo {
     private final Map<String, List<Animal>> animalsByTypeDictionary;
 
 
-
-    public Zoo() throws FileNotFoundException {
+    public Zoo(Auth authentication) throws FileNotFoundException {
         this.animals = new ArrayList<>();
         this.animalTypes = new ArrayList<>();
         this.animalsByTypeDictionary = new HashMap<>();
         this.animalDictionary = new HashMap<>();
+        this.authentication = authentication;
         ZooFactory.populateZoo(this);
     }
 

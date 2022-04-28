@@ -5,12 +5,13 @@ import com.company.users.Auth;
 
 public class VisitorCommands extends Commands {
     private final Zoo zoo;
-    private Auth authentication = new Auth();
+    private Auth authentication;
 
 
-    public VisitorCommands(Zoo zoo) {
+    public VisitorCommands(Zoo zoo, Auth authentication) {
         super(new String[]{"See Zoo Overview", "Visit Animal", "Edit Information", "Log off"}, "Visitor");
         this.zoo = zoo;
+        this.authentication = authentication;
 
     }
 

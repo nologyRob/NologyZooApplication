@@ -22,7 +22,6 @@ public class CSVReader implements Readable {
 
             while (true) {
                 String line = fileReader.readLine();
-
                 if (line == null) break;
 
                 String[] values = line.split(",");
