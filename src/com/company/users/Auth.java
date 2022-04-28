@@ -1,7 +1,6 @@
 package com.company.users;
 
-import com.company.Zoo;
-
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,14 +9,11 @@ public class Auth {
     private final List<User> zookeepers;
     private User currentUser;
 
-
-    public Auth() {
+    public Auth() throws FileNotFoundException {
         this.visitors = new ArrayList<>();
         this.zookeepers = new ArrayList<>();
-        visitors.add(new Visitor("charlie", "test"));
-        zookeepers.add(new Zookeeper("rob", "test"));
+        AuthFactory.populateAuth(this);
     }
-
 
     public void createVisitor(String name, String password) {
         Visitor visitor = new Visitor(name, password);
@@ -60,7 +56,12 @@ public class Auth {
         return currentUser;
     }
 
-    public void setCurrentUser(User currentUser) {
-        this.currentUser = currentUser;
+    public void addZookeeper(Zookeeper zookeeper) {
+        zookeepers.add(zookeeper);
+    }
+
+
+    public void addVisitor(Visitor visitor) {
+        visitors.add(visitor);
     }
 }
