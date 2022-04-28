@@ -5,20 +5,16 @@ import com.company.Searchable;
 import java.util.UUID;
 
 public abstract class User implements Searchable {
-    private final boolean isStaff;
-    private final String id;
+    protected final String id;
     private final String password;
-    private String name;
+    protected String name;
+    protected UserTypes type;
 
-    public User(String name, boolean isStaff, String password) {
+    public User(String name, String password, UserTypes type) {
         this.name = name;
-        this.isStaff = isStaff;
         this.id = UUID.randomUUID().toString();
         this.password = password;
-    }
-
-    public boolean isStaff() {
-        return isStaff;
+        this.type = type;
     }
 
     public String getId() {

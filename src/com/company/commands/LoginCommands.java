@@ -2,7 +2,6 @@ package com.company.commands;
 
 
 // TODO
-// ONE LOG METHOD
 
 import com.company.Zoo;
 
@@ -14,13 +13,13 @@ public class LoginCommands extends Commands {
         this.zoo = zoo;
     }
 
-    public void createVisitor() {
+    private void createVisitor() {
         String name = getStringInput("Enter Name below:");
         String password = getStringInput("Enter Password below:");
         zoo.createVisitor(name, password);
     }
 
-    public boolean loginVisitor() {
+    private boolean loginVisitor() {
         boolean isActive = true;
         boolean isLoggedIn = false;
 
@@ -47,7 +46,7 @@ public class LoginCommands extends Commands {
         return isLoggedIn;
     }
 
-    public boolean loginZookeeper() {
+    private boolean loginZookeeper() {
         boolean isActive = true;
         boolean isLoggedIn = false;
 
@@ -92,22 +91,22 @@ public class LoginCommands extends Commands {
 
             if (userSelection == 1) {
                 createVisitor();
-                setNextCommands(CommandNames.Visitor);
+                setNextCommands(CommandTypes.Visitor);
                 isActive = false;
             } else if (userSelection == 2) {
                 boolean isLoggedIn = loginVisitor();
                 if (isLoggedIn) {
-                    setNextCommands(CommandNames.Visitor);
+                    setNextCommands(CommandTypes.Visitor);
                     isActive = false;
                 }
             } else if (userSelection == 3) {
                 boolean isLoggedIn = loginZookeeper();
                 if (isLoggedIn) {
-                    setNextCommands(CommandNames.ZooKeeper);
+                    setNextCommands(CommandTypes.ZooKeeper);
                     isActive = false;
                 }
             } else {
-                setNextCommands(CommandNames.Exit);
+                setNextCommands(CommandTypes.Exit);
                 isActive = false;
             }
         }

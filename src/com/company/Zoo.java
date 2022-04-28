@@ -11,24 +11,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 // TODO
 // HASH SET -> USERNAMES?
 // ADD VISITORS IN ZOO FACTORY
+
 // REFACTOR LOGIN?
 // - NEW AUTH CLASS?
-
-// ORGANISE PACKAGES
-// - ANIMALS
-// - COMMANDS
-// - ZOO
 // - AUTH USERS ZOO KEEPER
 
-// CLASS DIAGRAMS -> EACH STAGE
-
-// COMPARABLE INTERFACE
-
-// READ FROM CSV FILE ZOO FACTORY -> VIA INTERFACE
 
 public class Zoo {
 
@@ -52,14 +44,12 @@ public class Zoo {
         this.visitors = new ArrayList<>();
         this.animalTypes = new ArrayList<>();
         this.zookeepers = new ArrayList<>();
-
         this.animalsByTypeDictionary = new HashMap<>();
         this.animalDictionary = new HashMap<>();
-        // MOVE TO ZOO FACTORY
+        ZooFactory.populateZoo(this);
+
         visitors.add(new Visitor("charlie", "test"));
         zookeepers.add(new Zookeeper("rob", "test"));
-
-        ZooFactory.populateZoo(this);
     }
 
     // --- LOGIN / LOGOUT ---
@@ -155,19 +145,6 @@ public class Zoo {
         return animalDictionary.containsKey(animalId);
     }
 
-    public List<Animal> getAnimalsByType(AnimalTypes animalType) {
-        switch (animalType) {
-            case Lion:
-                return animalsByTypeDictionary.get(AnimalTypes.Lion.toString());
-            case Llama:
-                return animalsByTypeDictionary.get(AnimalTypes.Llama.toString());
-            case Crocodile:
-                return animalsByTypeDictionary.get(AnimalTypes.Crocodile.toString());
-            default:
-                return null;
-        }
-    }
-
     public String getRandomAnimalId() {
         int index = (int) (Math.random() * animals.size());
         return animals.get(index).getId();
@@ -186,7 +163,7 @@ public class Zoo {
         return animal.getInformation();
     }
 
-    public String getAllAnimalsInformation() {
+    public String getAnimalInformation(List<Animal> animals) {
         StringBuilder animalOverview = new StringBuilder();
 
         for (Animal animal : animals) {
@@ -197,11 +174,45 @@ public class Zoo {
         return animalOverview.toString();
     }
 
+    public String getAnimalInformationByType(AnimalTypes animalType) {
+        List<Animal> animalsByType;
+        switch (animalType) {
+            case Lion:
+                animalsByType = animalsByTypeDictionary.get(AnimalTypes.Lion.toString());
+                break;
+            case Llama:
+                animalsByType = animalsByTypeDictionary.get(AnimalTypes.Llama.toString());
+                break;
+            default:
+                animalsByType = animalsByTypeDictionary.get(AnimalTypes.Crocodile.toString());
+        }
+
+        return getAnimalInformation(animalsByType);
+    }
+
+    public String getAllAnimalsInformation() {
+        return getAnimalInformation(animals);
+    }
+
     public String getUsersName() {
         return currentUser.getName();
     }
 
+    private List<Animal> getHungryAnimals() {
+        return animals.stream().filter(animal -> animal.getHunger() < 50).collect(Collectors.toList());
+    }
+
+    public String getHungryAnimalInformation() {
+        List<Animal> hungryAnimals = getHungryAnimals();
+        return getAnimalInformation(hungryAnimals);
+    }
+
     // --- UPDATE ---
+
+    public void feedHungryAnimals() {
+        List<Animal> hungryAnimals = getHungryAnimals();
+        hungryAnimals.forEach(Animal::feedAnimal);
+    }
 
     public void updateUser(String name) {
         currentUser.setName(name);

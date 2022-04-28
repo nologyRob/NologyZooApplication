@@ -5,35 +5,37 @@ import java.util.Locale;
 import java.util.Scanner;
 
 abstract public class Commands {
+    protected final String name;
     private final Scanner scanner;
     private final String[] commands;
-    private final String name;
-    private CommandNames nextCommands;
+    protected CommandTypes nextCommands;
 
     public Commands(String[] commands, String name) {
         this.scanner = new Scanner(System.in);
-        this.nextCommands = CommandNames.Exit;
+        this.nextCommands = CommandTypes.Exit;
         this.commands = commands;
         this.name = name;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public CommandNames getNextCommands() {
+    // GETTERS & SETTERS
+    public CommandTypes getNextCommands() {
         return nextCommands;
     }
 
-    public void setNextCommands(CommandNames nextCommands) {
+    public void setNextCommands(CommandTypes nextCommands) {
         this.nextCommands = nextCommands;
     }
 
-    public int getIntegerInput() {
-        return getIntegerInput(commands.length);
+    protected void printMessage(String message) {
+        System.out.println(message);
     }
 
-    public int getIntegerInput(int limit) {
+    // SHOW YOU CAN CALL METHODS IN OTHER METHODS
+    protected void printGreeting() {
+        printMessage("Welcome to the " + name + " commands.");
+    }
+
+    protected int getIntegerInput(int limit) {
         boolean isActive = true;
         int input = 0;
 
@@ -60,11 +62,9 @@ abstract public class Commands {
         return input;
     }
 
-    // SHOW YOU CAN CALL METHODS IN OTHER METHODS
-    protected void printMessage(String message) {
-        System.out.println(message);
+    protected int getIntegerInput() {
+        return getIntegerInput(commands.length);
     }
-
 
     // METHOD OVERLOADING + LOOPING
     protected void printIndexedCommands(String[] commands) {

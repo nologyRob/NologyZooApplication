@@ -26,10 +26,6 @@ public abstract class Animal implements Searchable {
         return type;
     }
 
-    public int getPopularity() {
-        return popularity;
-    }
-
     public boolean isCanPet() {
         return canPet;
     }
@@ -60,7 +56,7 @@ public abstract class Animal implements Searchable {
 
     @Override
     public String getInformation() {
-        return "This " + name.substring(0, name.length() - 1) + "id = " + id + " has a hunger of " + getHunger();
+        return "The " + type + " with the id : " + id + " has a hunger of " + hunger + " and a popularity of " + popularity + ".";
     }
 
     @Override

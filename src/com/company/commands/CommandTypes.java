@@ -1,5 +1,5 @@
 package com.company.commands;
 
-public enum CommandNames {
+public enum CommandTypes {
     Login, Visitor, Animal, ZooKeeper, Exit
 }
