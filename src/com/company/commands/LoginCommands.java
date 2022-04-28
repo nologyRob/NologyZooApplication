@@ -4,9 +4,11 @@ package com.company.commands;
 // TODO
 
 import com.company.Zoo;
+import com.company.users.Auth;
 
 public class LoginCommands extends Commands {
     private final Zoo zoo;
+    private Auth authentication = new Auth();
 
     public LoginCommands(Zoo zoo) {
         super(new String[]{"Create a new Visitor", "Login as Visitor", "Login as Zoo Keeper", "Exit"}, "login");
@@ -16,7 +18,7 @@ public class LoginCommands extends Commands {
     private void createVisitor() {
         String name = getStringInput("Enter Name below:");
         String password = getStringInput("Enter Password below:");
-        zoo.createVisitor(name, password);
+        authentication.createVisitor(name, password);
     }
 
     private boolean loginVisitor() {
@@ -26,7 +28,7 @@ public class LoginCommands extends Commands {
         while (isActive) {
             String name = getStringInput("Enter Name below:");
             String password = getStringInput("Enter Password below:");
-            isLoggedIn = zoo.logInVisitor(name, password);
+            isLoggedIn = authentication.logInVisitor(name, password);
 
             if (isLoggedIn) {
                 isActive = false;
@@ -53,7 +55,7 @@ public class LoginCommands extends Commands {
         while (isActive) {
             String name = getStringInput("Enter Name below:");
             String password = getStringInput("Enter Password below:");
-            isLoggedIn = zoo.logInZookeeper(name, password);
+            isLoggedIn = authentication.logInZookeeper(name, password);
 
             if (isLoggedIn) {
                 isActive = false;

@@ -2,6 +2,7 @@ package com.company;
 
 import com.company.animals.Animal;
 import com.company.animals.AnimalTypes;
+import com.company.users.Auth;
 import com.company.users.User;
 import com.company.users.Visitor;
 import com.company.users.Zookeeper;
@@ -26,9 +27,8 @@ public class Zoo {
 
     // NOT TIED TO A CONCRETE IMPLEMENTATION -> DEPENDENCY INVERSION
     private final List<Animal> animals;
-    private final List<User> visitors;
-    private final List<User> zookeepers;
     private final List<String> animalTypes;
+    private final Auth authentication = new Auth();
 
     // LOOK UP ANIMAL BY ID -> CACHED
     // LOOK UP ANIMALS BY TYPE / SPECIES
@@ -36,54 +36,16 @@ public class Zoo {
     private final Map<String, Animal> animalDictionary;
     private final Map<String, List<Animal>> animalsByTypeDictionary;
 
-    private User currentUser;
+
 
     public Zoo() throws FileNotFoundException {
-        this.currentUser = null;
         this.animals = new ArrayList<>();
-        this.visitors = new ArrayList<>();
         this.animalTypes = new ArrayList<>();
-        this.zookeepers = new ArrayList<>();
         this.animalsByTypeDictionary = new HashMap<>();
         this.animalDictionary = new HashMap<>();
         ZooFactory.populateZoo(this);
-
-        visitors.add(new Visitor("charlie", "test"));
-        zookeepers.add(new Zookeeper("rob", "test"));
     }
 
-    // --- LOGIN / LOGOUT ---
-    // AUTH SERVICE -> SECURITY -> IMPLEMENTATION
-    // LESSON -> DOING TO MUCH -> SINGLE USE
-
-    public void createVisitor(String name, String password) {
-        Visitor visitor = new Visitor(name, password);
-        visitors.add(visitor);
-        currentUser = visitor;
-    }
-
-    public void logOut() {
-        currentUser = null;
-    }
-
-    private boolean logIn(String name, String password, List<User> users) {
-        for (User user : users) {
-            if (user.authenticate(name, password)) {
-                currentUser = user;
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    public boolean logInVisitor(String name, String password) {
-        return logIn(name, password, visitors);
-    }
-
-    public boolean logInZookeeper(String name, String password) {
-        return logIn(name, password, zookeepers);
-    }
 
     // --- CREATE ---
 
@@ -127,9 +89,9 @@ public class Zoo {
         ArrayList<String> searchResults = new ArrayList<>();
         ArrayList<Searchable> toSearch = new ArrayList<>();
 
-        toSearch.addAll(visitors);
+        toSearch.addAll(authentication.getVisitors());
         toSearch.addAll(animals);
-        toSearch.addAll(zookeepers);
+        toSearch.addAll(authentication.getZookeepers());
 
         for (Searchable searchableItem : toSearch) {
             if (searchableItem.isMatch(searchTerm)) {
@@ -155,7 +117,7 @@ public class Zoo {
     }
 
     public String getZooOverview() {
-        return String.format("The Zoo currently has %d animals.\nThe Zoo currently has %d visitors.\nThe Current user is %s.", animals.size(), visitors.size(), currentUser.getName());
+        return String.format("The Zoo currently has %d animals.\nThe Zoo currently has %d visitors.\nThe Current user is %s.", animals.size(), authentication.getVisitors().size(), authentication.getCurrentUser().getName());
     }
 
     public String getAnimalInformation(String animalId) {
@@ -195,7 +157,7 @@ public class Zoo {
     }
 
     public String getUsersName() {
-        return currentUser.getName();
+        return authentication.getCurrentUser().getName();
     }
 
     private List<Animal> getHungryAnimals() {
@@ -215,12 +177,12 @@ public class Zoo {
     }
 
     public void updateUser(String name) {
-        currentUser.setName(name);
+        authentication.getCurrentUser().setName(name);
     }
 
     public boolean petAnimal(String animalId) {
         Animal animal = animalDictionary.get(animalId);
-        Visitor currentVisitor = (Visitor) this.currentUser;
+        Visitor currentVisitor = (Visitor) this.authentication.getCurrentUser();
 
         animal.makeSound();
 
@@ -236,7 +198,7 @@ public class Zoo {
     }
 
     public boolean spendAnimalToken(String animalId) {
-        Visitor currentUser = (Visitor) this.currentUser;
+        Visitor currentUser = (Visitor) authentication.getCurrentUser();
 
         if (currentUser.getAnimalTokens() > 0) {
             Animal animal = animalDictionary.get(animalId);
