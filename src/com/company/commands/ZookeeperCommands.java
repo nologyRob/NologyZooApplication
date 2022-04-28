@@ -2,15 +2,19 @@ package com.company.commands;
 
 import com.company.Zoo;
 import com.company.animals.AnimalTypes;
+import com.company.users.Auth;
 
 import java.util.List;
 
 public class ZookeeperCommands extends Commands {
     private final Zoo zoo;
+    private Auth authentication;
 
-    public ZookeeperCommands(Zoo zoo) {
+    public ZookeeperCommands(Zoo zoo, Auth authentication) {
         super(new String[]{"See List of Hungry Animals", "Feed Animals", "Add Animal", "Remove Animal", "Search", "Log off"}, "Zookeeper");
         this.zoo = zoo;
+        this.authentication = authentication;
+
     }
 
     private void printHungryAnimals() {
@@ -91,7 +95,7 @@ public class ZookeeperCommands extends Commands {
                 searchZoo();
             } else {
                 setNextCommands(CommandTypes.Login);
-                zoo.logOut();
+                authentication.logOut();
                 isActive = false;
             }
         }

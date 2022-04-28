@@ -4,10 +4,6 @@ package com.company;
 // PREPOPULATE VISITORS + ZOO-KEEPERS
 
 import com.company.animals.*;
-import com.company.users.User;
-import com.company.users.UserTypes;
-import com.company.users.Visitor;
-import com.company.users.Zookeeper;
 
 import java.io.FileNotFoundException;
 import java.util.Map;
@@ -25,14 +21,6 @@ public class ZooFactory {
         }
     }
 
-    public static User createUser(String userType, String name, String password) {
-        if (userType.equals(UserTypes.Zookeeper.toString())) {
-            return new Zookeeper(name, password);
-        } else {
-            return new Visitor(name, password);
-        }
-    }
-
     private static void populateAnimalTypes(Zoo zoo) {
         for (AnimalTypes animalType : AnimalTypes.values()) {
             zoo.addAnimalTypes(animalType.toString());
@@ -40,9 +28,9 @@ public class ZooFactory {
     }
 
     private static void populateAnimals(Zoo zoo) throws FileNotFoundException {
-        Readable csvReader = new CSVReader();
+        DataLoader csvReader = new CSVDataLoader();
 
-        Map<String, Integer> animalCountDictionary = csvReader.createDictionaryFromCSV("animal-count.csv");
+        Map<String, Integer> animalCountDictionary = csvReader.createDictionary("animal-count.csv");
 
         int lionCount = animalCountDictionary.get("lion");
         int llamaCount = animalCountDictionary.get("llama");
@@ -71,7 +59,6 @@ public class ZooFactory {
     }
 
     public static void populateZoo(Zoo zoo) throws FileNotFoundException {
-
         populateAnimals(zoo);
         populateAnimalTypes(zoo);
     }

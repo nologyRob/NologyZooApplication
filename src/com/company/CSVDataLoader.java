@@ -1,17 +1,16 @@
 package com.company;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CSVReader implements Readable {
+public class CSVDataLoader implements DataLoader {
 
 
-    public Map<String, Integer> createDictionaryFromCSV(String fileName) throws FileNotFoundException {
+    public Map<String, Integer> createDictionary(String fileName) {
         Map<String, Integer> csvDictionary = new HashMap<>();
 
         try {
@@ -22,7 +21,6 @@ public class CSVReader implements Readable {
 
             while (true) {
                 String line = fileReader.readLine();
-
                 if (line == null) break;
 
                 String[] values = line.split(",");
@@ -45,7 +43,7 @@ public class CSVReader implements Readable {
     }
 
     @Override
-    public List<String[]> createListFromCSV(String fileName) throws FileNotFoundException {
+    public List<String[]> createUsers(String fileName) {
         List<String[]> csvList = new ArrayList<>();
 
         try {

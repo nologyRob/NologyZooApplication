@@ -2,6 +2,7 @@ package com.company.animals;
 
 import com.company.Searchable;
 
+import java.util.Locale;
 import java.util.UUID;
 
 
@@ -61,7 +62,7 @@ public abstract class Animal implements Searchable {
 
     @Override
     public boolean isMatch(String toMatch) {
-        return name.contains(toMatch) || id.contains(toMatch) || type.contains(toMatch);
+        return name.toLowerCase(Locale.ROOT).contains(toMatch) || id.contains(toMatch) || type.toLowerCase(Locale.ROOT).contains(toMatch);
     }
 
     public abstract void makeSound();

@@ -1,14 +1,18 @@
 package com.company.commands;
 
 import com.company.Zoo;
+import com.company.users.Auth;
 
 public class VisitorCommands extends Commands {
     private final Zoo zoo;
+    private Auth authentication;
 
 
-    public VisitorCommands(Zoo zoo) {
+    public VisitorCommands(Zoo zoo, Auth authentication) {
         super(new String[]{"See Zoo Overview", "Visit Animal", "Edit Information", "Log off"}, "Visitor");
         this.zoo = zoo;
+        this.authentication = authentication;
+
     }
 
     private void printOverview() {
@@ -51,7 +55,7 @@ public class VisitorCommands extends Commands {
             } else if (userSelection == 3) {
                 updateUser();
             } else {
-                zoo.logOut();
+                authentication.logOut();
                 setNextCommands(CommandTypes.Login);
                 isActive = false;
             }
