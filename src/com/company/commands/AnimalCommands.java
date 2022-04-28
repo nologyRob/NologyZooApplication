@@ -1,7 +1,6 @@
 package com.company.commands;
 
 import com.company.Zoo;
-import com.company.animals.Animal;
 import com.company.animals.AnimalTypes;
 
 import java.util.List;
@@ -21,28 +20,27 @@ public class AnimalCommands extends Commands {
     private void printAnimalsByType() {
         printMessage("Select a Type of Animal:");
         List<String> animalTypes = zoo.getAnimalTypes();
-
         printIndexedCommands(animalTypes);
 
-        List<Animal> selectedAnimalsByType;
+        String selectedAnimalsByType;
 
         int userSelection = getIntegerInput(animalTypes.size());
 
         String message;
 
         if (userSelection == 1) {
-            selectedAnimalsByType = zoo.getAnimalsByType(AnimalTypes.Lion);
+            selectedAnimalsByType = zoo.getAnimalInformationByType(AnimalTypes.Lion);
             message = "We have the following " + AnimalTypes.Lion + "s in the Zoo.";
         } else if (userSelection == 2) {
-            selectedAnimalsByType = zoo.getAnimalsByType(AnimalTypes.Llama);
+            selectedAnimalsByType = zoo.getAnimalInformationByType(AnimalTypes.Llama);
             message = "We have the following " + AnimalTypes.Llama + "s in the Zoo.";
         } else {
-            selectedAnimalsByType = zoo.getAnimalsByType(AnimalTypes.Crocodile);
+            selectedAnimalsByType = zoo.getAnimalInformationByType(AnimalTypes.Crocodile);
             message = "We have the following " + AnimalTypes.Crocodile + "s in the Zoo.";
         }
 
         printMessage(message);
-        selectedAnimalsByType.forEach(animal -> printMessage(animal.getInformation()));
+        printMessage(selectedAnimalsByType);
     }
 
     private void visitAnimal() {
@@ -113,7 +111,7 @@ public class AnimalCommands extends Commands {
                 printMessage("Visit random animal");
                 visitRandomAnimal();
             } else {
-                setNextCommands(CommandNames.Visitor);
+                setNextCommands(CommandTypes.Visitor);
                 isActive = false;
             }
 

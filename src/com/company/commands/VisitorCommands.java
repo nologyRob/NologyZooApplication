@@ -11,11 +11,11 @@ public class VisitorCommands extends Commands {
         this.zoo = zoo;
     }
 
-    public void printOverview() {
+    private void printOverview() {
         printMessage(zoo.getZooOverview());
     }
 
-    public void updateUser() {
+    private void updateUser() {
         printMessage("Hello " + zoo.getUsersName());
 
         String newName = getStringInput("Enter your new name below");
@@ -27,7 +27,7 @@ public class VisitorCommands extends Commands {
 
     @Override
     public void printCommands() {
-        printMessage("Welcome to the " + getName() + " commands.");
+        printGreeting();
         printMessage("Select an option:");
         printIndexedCommands();
         printMessage("Enter option:");
@@ -46,13 +46,13 @@ public class VisitorCommands extends Commands {
             if (userSelection == 1) {
                 printOverview();
             } else if (userSelection == 2) {
-                setNextCommands(CommandNames.Animal);
+                setNextCommands(CommandTypes.Animal);
                 isActive = false;
             } else if (userSelection == 3) {
                 updateUser();
             } else {
                 zoo.logOut();
-                setNextCommands(CommandNames.Login);
+                setNextCommands(CommandTypes.Login);
                 isActive = false;
             }
         }

@@ -1,13 +1,11 @@
 package com.company.users;
 
-import com.company.users.User;
-
 public class Visitor extends User {
     private int animalTokens;
     private int happiness;
 
     public Visitor(String name, String password) {
-        super(name, false, password);
+        super(name, password, UserTypes.Visitor);
         this.animalTokens = 5;
         this.happiness = (int) (Math.random() * 100 + 1);
     }
@@ -30,6 +28,6 @@ public class Visitor extends User {
 
     @Override
     public String getInformation() {
-        return String.format("This %s, with the id: %s.\nHas %d tokens left and is %d happy.", getName(), getId(), animalTokens, happiness);
+        return String.format("This %s, with the id: %s.\nHas %d tokens left and is %d happy.", name, id, animalTokens, happiness);
     }
 }
