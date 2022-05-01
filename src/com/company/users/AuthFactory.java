@@ -11,9 +11,8 @@ public class AuthFactory {
     public static void populateAuth(Auth auth) throws FileNotFoundException {
         DataLoader csvLoader = new CSVDataLoader();
         List<String[]> userDetails = csvLoader.createUsers("users.csv");
-
         for (String[] userDetail : userDetails) {
-            if (Objects.equals(userDetail[0], UserTypes.Zookeeper.toString())) {
+            if (Objects.equals(userDetail[0], UserTypes.ZOOKEEPER.toString())) {
                 auth.addZookeeper(new Zookeeper(userDetail[1], userDetail[2]));
             } else {
                 auth.addVisitor(new Visitor(userDetail[1], userDetail[2]));

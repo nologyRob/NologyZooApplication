@@ -1,5 +1,5 @@
 package com.company.animals;
 
 public enum AnimalTypes {
-    Lion, Llama, Crocodile
+    LION, LLAMA, CROCODILE
 }

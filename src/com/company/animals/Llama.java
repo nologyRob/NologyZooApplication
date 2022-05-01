@@ -2,7 +2,7 @@ package com.company.animals;
 
 public class Llama extends Animal {
     public Llama(String name) {
-        super(name, AnimalTypes.Llama.toString(), true);
+        super(name, AnimalTypes.LLAMA.toString(), true);
     }
 
     @Override

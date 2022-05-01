@@ -12,12 +12,12 @@ public class ZooFactory {
 
     public static Animal createAnimal(AnimalTypes animal, int index) {
         switch (animal) {
-            case Lion:
-                return new Lion(AnimalTypes.Lion.toString() + index);
-            case Llama:
-                return new Llama(AnimalTypes.Llama.toString() + index);
+            case LION:
+                return new Lion(AnimalTypes.LION.toString() + index);
+            case LLAMA:
+                return new Llama(AnimalTypes.LLAMA.toString() + index);
             default:
-                return new Crocodile(AnimalTypes.Crocodile.toString() + index);
+                return new Crocodile(AnimalTypes.CROCODILE.toString() + index);
         }
     }
 
@@ -38,19 +38,19 @@ public class ZooFactory {
 
         while (lionCount > 0 || llamaCount > 0 || crocodileCount > 0) {
             if (lionCount > 0) {
-                Animal lion = createAnimal(AnimalTypes.Lion, lionCount);
+                Animal lion = createAnimal(AnimalTypes.LION, lionCount);
                 zoo.addAnimal(lion);
                 lionCount--;
             }
 
             if (llamaCount > 0) {
-                Animal llama = createAnimal(AnimalTypes.Llama, llamaCount);
+                Animal llama = createAnimal(AnimalTypes.LLAMA, llamaCount);
                 zoo.addAnimal(llama);
                 llamaCount--;
             }
 
             if (crocodileCount > 0) {
-                Animal crocodile = createAnimal(AnimalTypes.Crocodile, crocodileCount);
+                Animal crocodile = createAnimal(AnimalTypes.CROCODILE, crocodileCount);
                 zoo.addAnimal(crocodile);
                 crocodileCount--;
             }
