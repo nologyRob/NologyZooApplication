@@ -3,9 +3,7 @@ package com.company;
 import com.company.animals.Animal;
 import com.company.animals.AnimalTypes;
 import com.company.users.Auth;
-import com.company.users.User;
 import com.company.users.Visitor;
-import com.company.users.Zookeeper;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -139,14 +137,14 @@ public class Zoo {
     public String getAnimalInformationByType(AnimalTypes animalType) {
         List<Animal> animalsByType;
         switch (animalType) {
-            case Lion:
-                animalsByType = animalsByTypeDictionary.get(AnimalTypes.Lion.toString());
+            case LION:
+                animalsByType = animalsByTypeDictionary.get(AnimalTypes.LION.toString());
                 break;
-            case Llama:
-                animalsByType = animalsByTypeDictionary.get(AnimalTypes.Llama.toString());
+            case LLAMA:
+                animalsByType = animalsByTypeDictionary.get(AnimalTypes.LLAMA.toString());
                 break;
             default:
-                animalsByType = animalsByTypeDictionary.get(AnimalTypes.Crocodile.toString());
+                animalsByType = animalsByTypeDictionary.get(AnimalTypes.CROCODILE.toString());
         }
 
         return getAnimalInformation(animalsByType);

@@ -3,7 +3,7 @@ package com.company.animals;
 public class Lion extends Animal {
 
     public Lion(String name) {
-        super(name, AnimalTypes.Lion.toString(), false);
+        super(name, AnimalTypes.LION.toString(), false);
     }
 
     @Override
