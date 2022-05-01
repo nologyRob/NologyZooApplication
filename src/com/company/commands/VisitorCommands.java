@@ -5,7 +5,7 @@ import com.company.users.Auth;
 
 public class VisitorCommands extends Commands {
     private final Zoo zoo;
-    private Auth authentication;
+    private final Auth authentication;
 
 
     public VisitorCommands(Zoo zoo, Auth authentication) {
@@ -50,13 +50,13 @@ public class VisitorCommands extends Commands {
             if (userSelection == 1) {
                 printOverview();
             } else if (userSelection == 2) {
-                setNextCommands(CommandTypes.Animal);
+                setNextCommands(CommandTypes.ANIMAL);
                 isActive = false;
             } else if (userSelection == 3) {
                 updateUser();
             } else {
                 authentication.logOut();
-                setNextCommands(CommandTypes.Login);
+                setNextCommands(CommandTypes.LOGIN);
                 isActive = false;
             }
         }

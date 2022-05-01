@@ -12,7 +12,7 @@ abstract public class Commands {
 
     public Commands(String[] commands, String name) {
         this.scanner = new Scanner(System.in);
-        this.nextCommands = CommandTypes.Exit;
+        this.nextCommands = CommandTypes.EXIT;
         this.commands = commands;
         this.name = name;
     }

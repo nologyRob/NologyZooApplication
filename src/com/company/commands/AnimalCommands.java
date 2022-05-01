@@ -29,14 +29,14 @@ public class AnimalCommands extends Commands {
         String message;
 
         if (userSelection == 1) {
-            selectedAnimalsByType = zoo.getAnimalInformationByType(AnimalTypes.Lion);
-            message = "We have the following " + AnimalTypes.Lion + "s in the Zoo.";
+            selectedAnimalsByType = zoo.getAnimalInformationByType(AnimalTypes.LION);
+            message = "We have the following " + AnimalTypes.LION + "s in the Zoo.";
         } else if (userSelection == 2) {
-            selectedAnimalsByType = zoo.getAnimalInformationByType(AnimalTypes.Llama);
-            message = "We have the following " + AnimalTypes.Llama + "s in the Zoo.";
+            selectedAnimalsByType = zoo.getAnimalInformationByType(AnimalTypes.LLAMA);
+            message = "We have the following " + AnimalTypes.LLAMA + "s in the Zoo.";
         } else {
-            selectedAnimalsByType = zoo.getAnimalInformationByType(AnimalTypes.Crocodile);
-            message = "We have the following " + AnimalTypes.Crocodile + "s in the Zoo.";
+            selectedAnimalsByType = zoo.getAnimalInformationByType(AnimalTypes.CROCODILE);
+            message = "We have the following " + AnimalTypes.CROCODILE + "s in the Zoo.";
         }
 
         printMessage(message);
@@ -111,7 +111,7 @@ public class AnimalCommands extends Commands {
                 printMessage("Visit random animal");
                 visitRandomAnimal();
             } else {
-                setNextCommands(CommandTypes.Visitor);
+                setNextCommands(CommandTypes.VISITOR);
                 isActive = false;
             }
 

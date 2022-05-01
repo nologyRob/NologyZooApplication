@@ -8,7 +8,7 @@ import java.util.List;
 
 public class ZookeeperCommands extends Commands {
     private final Zoo zoo;
-    private Auth authentication;
+    private final Auth authentication;
 
     public ZookeeperCommands(Zoo zoo, Auth authentication) {
         super(new String[]{"See List of Hungry Animals", "Feed Animals", "Add Animal", "Remove Animal", "Search", "Log off"}, "Zookeeper");
@@ -33,11 +33,11 @@ public class ZookeeperCommands extends Commands {
         int userInput = getIntegerInput(animalTypes.size());
 
         if (userInput == 1) {
-            zoo.createAnimal(AnimalTypes.Lion);
+            zoo.createAnimal(AnimalTypes.LION);
         } else if (userInput == 2) {
-            zoo.createAnimal(AnimalTypes.Llama);
+            zoo.createAnimal(AnimalTypes.LLAMA);
         } else {
-            zoo.createAnimal(AnimalTypes.Crocodile);
+            zoo.createAnimal(AnimalTypes.CROCODILE);
         }
     }
 
@@ -94,7 +94,7 @@ public class ZookeeperCommands extends Commands {
             } else if (userSelection == 5) {
                 searchZoo();
             } else {
-                setNextCommands(CommandTypes.Login);
+                setNextCommands(CommandTypes.LOGIN);
                 authentication.logOut();
                 isActive = false;
             }

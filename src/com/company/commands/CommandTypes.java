@@ -1,5 +1,5 @@
 package com.company.commands;
 
 public enum CommandTypes {
-    Login, Visitor, Animal, ZooKeeper, Exit
+    LOGIN, VISITOR, ANIMAL, ZOOKEEPER, EXIT
 }

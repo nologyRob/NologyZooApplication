@@ -25,7 +25,7 @@ public class LoginCommands extends Commands {
         while (isActive) {
             String name = getStringInput("Enter Name below:");
             String password = getStringInput("Enter Password below:");
-            if (type == UserTypes.Visitor) {
+            if (type == UserTypes.VISITOR) {
                 isLoggedIn = authentication.logInVisitor(name, password);
             } else {
                 isLoggedIn = authentication.logInZookeeper(name, password);
@@ -68,22 +68,22 @@ public class LoginCommands extends Commands {
 
             if (userSelection == 1) {
                 createVisitor();
-                setNextCommands(CommandTypes.Visitor);
+                setNextCommands(CommandTypes.VISITOR);
                 isActive = false;
             } else if (userSelection == 2) {
-                boolean isLoggedIn = loginUser(UserTypes.Visitor);
+                boolean isLoggedIn = loginUser(UserTypes.VISITOR);
                 if (isLoggedIn) {
-                    setNextCommands(CommandTypes.Visitor);
+                    setNextCommands(CommandTypes.VISITOR);
                     isActive = false;
                 }
             } else if (userSelection == 3) {
-                boolean isLoggedIn = loginUser(UserTypes.Zookeeper);
+                boolean isLoggedIn = loginUser(UserTypes.ZOOKEEPER);
                 if (isLoggedIn) {
-                    setNextCommands(CommandTypes.ZooKeeper);
+                    setNextCommands(CommandTypes.ZOOKEEPER);
                     isActive = false;
                 }
             } else {
-                setNextCommands(CommandTypes.Exit);
+                setNextCommands(CommandTypes.EXIT);
                 isActive = false;
             }
         }

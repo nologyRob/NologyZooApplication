@@ -1,5 +1,5 @@
 type,name,password
-Visitor,charlie,test
-Zookeeper,rob,test
-Visitor,andy,test
-Zookeeper,ash,test
+VISITOR,charlie,test
+ZOOKEEPER,rob,test
+VISITOR,andy,test
+ZOOKEEPER,ash,test

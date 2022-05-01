@@ -11,7 +11,6 @@ public class Main {
         Auth authentication = new Auth();
         Zoo zoo = new Zoo(authentication);
 
-
         Commands loginCommands = new LoginCommands(authentication);
         Commands visitorCommands = new VisitorCommands(zoo, authentication);
         Commands animalCommands = new AnimalCommands(zoo);
@@ -25,16 +24,16 @@ public class Main {
             currentCommands.runCommands();
 
             switch (currentCommands.getNextCommands()) {
-                case Login:
+                case LOGIN:
                     currentCommands = loginCommands;
                     break;
-                case Visitor:
+                case VISITOR:
                     currentCommands = visitorCommands;
                     break;
-                case Animal:
+                case ANIMAL:
                     currentCommands = animalCommands;
                     break;
-                case ZooKeeper:
+                case ZOOKEEPER:
                     currentCommands = zookeeperCommands;
                     break;
                 default:

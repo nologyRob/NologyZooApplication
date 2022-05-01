@@ -5,7 +5,7 @@ public class Visitor extends User {
     private int happiness;
 
     public Visitor(String name, String password) {
-        super(name, password, UserTypes.Visitor);
+        super(name, password, UserTypes.VISITOR);
         this.animalTokens = 5;
         this.happiness = (int) (Math.random() * 100 + 1);
     }
