@@ -11,8 +11,8 @@ public class Main {
         Auth authentication = new Auth();
         Zoo zoo = new Zoo(authentication);
 
-        
-        Commands loginCommands = new LoginCommands(zoo, authentication);
+
+        Commands loginCommands = new LoginCommands(authentication);
         Commands visitorCommands = new VisitorCommands(zoo, authentication);
         Commands animalCommands = new AnimalCommands(zoo);
         Commands zookeeperCommands = new ZookeeperCommands(zoo, authentication);
