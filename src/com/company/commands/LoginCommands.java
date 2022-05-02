@@ -25,10 +25,10 @@ public class LoginCommands extends Commands {
         while (isActive) {
             String name = getStringInput("Enter Name below:");
             String password = getStringInput("Enter Password below:");
-            if (type == UserTypes.VISITOR) {
-                isLoggedIn = authentication.logInVisitor(name, password);
+            if (type == UserTypes.ZOOKEEPER) {
+                isLoggedIn = authentication.logIn(UserTypes.ZOOKEEPER, name, password);
             } else {
-                isLoggedIn = authentication.logInZookeeper(name, password);
+                isLoggedIn = authentication.logIn(UserTypes.VISITOR, name, password);
             }
 
             if (isLoggedIn) {
