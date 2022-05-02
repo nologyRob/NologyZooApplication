@@ -6,38 +6,6 @@ enum AnimalTypes {
     CROCODILE
 }
 
-abstract class Animal {
-- String name
-- String id
-- String type
-- boolean canPet
-- int hunger
-- int popularity
-+ String getType()
-+ boolean isCanPet()
-+ String getName()
-+ String getId()
-+ String getHunger()
-+ void feedAnimal()
-+ void pet()
-+ void receiveToken()
-+ String getInformation()
-+ boolean isMatch()
-+ {abstract} void makeSound()
-}
-
-class Crocodile {
-+ void makeSound()
-}
-
-class Lion {
-+ void makeSound()
-}
-
-class Llama {
-+ void makeSound()
-}
-
 enum CommandTypes {
     LOGIN
     VISITOR
@@ -46,192 +14,231 @@ enum CommandTypes {
     EXIT
 }
 
-abstract class Commands {
-    # String name
-    # CommandTypes nextCommands
-    - Scanner scanner
-    - String[] commands
-    + CommandTypes getNextCommands()
-    + void setNextCommands(CommandTypes)
-    # void printMessage()
-    # void printGreeting()
-    # int getIntegerInput(int)
-    # int getIntegerInput()
-    # void printIndexedCommands(String[])
-    # void printIndexedCommands()
-    # void printIndexedCommands(List<String>)
-    # String getStringInput(String)
-    + {abstract} void printCommands()
-    + {abstract} void runCommands()
-}
-
-class AnimalCommands {
-    - Zoo zoo
-    - void printAllAnimals()
-    - void printAnimalsByType()
-    - void visitAnimal()
-    - void visitRandomAnimal()
-    - void interactWithAnimal(String)
-    + void printCommands()
-    + void runCommands()
-}
-
-class LoginCommands {
-    - Zoo zoo
-    - Auth authentication
-    - void createVisitor()
-    - boolean loginUser(UserTypes)
-    + void printCommands()
-    + void runCommands()
-}
-
-class VisitorCommands {
-    - Zoo zoo
-    - Auth authentication
-    - void printOverview()
-    - void updateUser()
-    + void printCommands()
-    + void runCommands()
-}
-
-class ZooKeeperCommands {
-    - Zoo zoo
-    - void printHungryAnimals()
-    - void feedHungryAnimals()
-    - void addAnimal()
-    - void removeAnimal()
-    - void searchZoo()
-    + void printCommands()
-    + void runCommands()
-}
-
 enum UserTypes {
     VISITOR
     ZOOKEEPER
 }
 
+abstract class Animal {
+- name : String
+- name : String
+- id : String
+- type : String
+- canPet : boolean
+- hunger : int
+- popularity : int
++ getType() : String
++ isCanPet() : boolean
++ getName() : String
++ getId() : String
++ getHunger() : String
++ feedAnimal() : void
++ pet() : void
++ receiveToken() : void
++ getInformation() : String
++ isMatch() : boolean
++ {abstract} makeSound() : void
+}
+
+class Crocodile {
++ makeSound() : void
+}
+
+class Lion {
++ makeSound() : void
+}
+
+class Llama {
++ makeSound() : void
+}
+
+abstract class Commands {
+    # name : String
+    # nextCommands : CommandTypes
+    - scanner : Scanner
+    - commands : String[]
+    + getNextCommands() : CommandTypes
+    + setNextCommands() : void
+    # printMessage() : void
+    # printGreeting() : void
+    # getIntegerInput() : int
+    # getIntegerInput() : int
+    # printIndexedCommands() : void
+    # printIndexedCommands() : void
+    # printIndexedCommands() : void
+    # getStringInput() : String
+    + {abstract} printCommands() : void
+    + {abstract} runCommands() : void
+}
+
+class AnimalCommands {
+    - zoo : Zoo
+    - printAllAnimals() : void
+    - printAnimalsByType() : void
+    - visitAnimal() : void
+    - visitRandomAnimal() : void
+    - interactWithAnimal() : void
+    + printCommands() : void
+    + runCommands() : void
+}
+
+class LoginCommands {
+    - zoo : Zoo
+    - authentication : Auth
+    - createVisitor() : void
+    - loginUser() : boolean
+    + printCommands() : void
+    + runCommands() : void
+}
+
+class VisitorCommands {
+    - zoo : Zoo
+    - authentication : Auth
+    - printOverview() : void
+    - updateUser() : void
+    + printCommands() : void
+    + runCommands() : void
+}
+
+class ZooKeeperCommands {
+    - zoo : Zoo
+    - authentication : Auth
+    - printHungryAnimals() : void
+    - feedHungryAnimals() : void
+    - addAnimal() : void
+    - removeAnimal() : void
+    - searchZoo() : void
+    + printCommands() : void
+    + runCommands() : void
+}
+
 class Auth {
-    - List<User> visitors
-    - List<User> zookeepers
-    - User currentUser
-    + void createVisitor()
-    + void logOut()
-    - boolean logIn(String, String, List<User>)
-    + boolean loginVisitor()
-    + boolean loginZookeeper()
-    + List<User> getVisitors()
-    + List<User> getZookeepers()
-    + User getCurrentUser()
-    + void addZookeeper(ZooKeeper)
-    + void addVisitor(Visitor)
+    - visitors : List<User>
+    - zookeepers : List<User>
+    - currentUser : User
+    + createVisitor() : void
+    + logOut() : void
+    + logIn() : boolean
+    + getVisitors() : List<User>
+    + getZookeepers() : List<User>
+    + getCurrentUser() : User
+    + addZookeeper() : void
+    + addVisitor() : void
 }
 
 class AuthFactory {
-    + {static} void populateAuth()
+    + {static} populateAuth() : void
 }
 
 abstract class User {
-    # String id
-    # String name
-    # UserTypes type
-    - String password
-    + String getId()
-    + String getName()
-    + void setName(String)
-    + boolean authenticate(String, String)
-    + boolean isMatch(String)
+    # id : String
+    # name : String
+    # type : UserTypes
+    - password : String
+    + getId() : String
+    + getName() : String
+    + setName() : void
+    + authenticate() : boolean
+    + isMatch() : boolean
 }
 
 class Visitor {
-    - int animalTokens
-    - int happiness
-    + void incrementHappiness()
-    + void decrementHappiness()
-    + int getAnimalTokens()
-    + void spendToken()
-    + String getInformation()
+    - animalTokens : int
+    - happiness : int
+    + incrementHappiness() : void
+    + decrementHappiness() : void
+    + getAnimalTokens() : int
+    + spendToken() : void
+    + getInformation() : String
 }
 
 class ZooKeeper {
-    + String getInformation()
+    + getInformation() : String
 }
 
 class CSVDataLoader {
-    + Map<String, Integer> createDictionary(String)
-    + List<String[]> createUsers(String)
+    + createDictionary() : Map<String, Integer>
+    + createUsers() : List<String[]>
 }
 
 interface DataLoader {
-    + Map<String, Integer> createDictionary(String)
-    + List<String[]> createUsers(String)
+    + createDictionary() : Map<String, Integer>
+    + createUsers() : List<String[]>
 }
 
-class Main
-
 interface Searchable {
-    + boolean isMatch(String)
-    + getInformation()
+    + isMatch() : boolean
+    + getInformation() : String
 }
 
 class Zoo {
-    - List<Animal> animals
-    - List<String> animalTypes
-    - Auth authentication
-    - Map<String, Animal> animalDictionary
-    - Map<String, List<Animal>> animalsByTypeDictionary
-    + void addAnimalTypes()
-    + void createAnimal(AnimalType)
-    + void addAnimal(Animal)
-    - void addToAnimalDictionary(Animal)
-    - void addToAnimalsByTypeDictionary(Animal)
-    + ArrayList<String> searchZoo(String)
-    + boolean hasAnimal(String)
-    + String getRandomAnimalId()
-    + List<String> getAnimalTypes()
-    + String getZooOverview()
-    + String getAnimalInformation(String)
-    + String getAnimalInformation(List<Animal>)
-    + String getAnimalInformationByType(AnimalTypes)
-    + String getAllAnimalsInformation()
-    + String getUsersName()
-    + List<Animal> getHungryAnimals()
-    + String getHungryAnimalInformation()
-    + void feedHungryAnimals()
-    + void updateUser()
-    + boolean petAnimal()
-    + boolean spendAnimalToken(String)
-    + boolean removeAnimal()
+    - animals : List<Animal>
+    - animalTypes : List<String>
+    - authentication : Auth
+    - animalDictionary : Map<String, Animal>
+    - animalsByTypeDictionary : Map<String, List<Animal>>
+    + addAnimalTypes() : void
+    + createAnimal() : void
+    + addAnimal() : void
+    - addToAnimalDictionary() : void
+    - addToAnimalsByTypeDictionary() : void
+    + searchZoo() : ArrayList<String>
+    + hasAnimal() : boolean
+    + getRandomAnimalId() : String
+    + getAnimalTypes() : List<String>
+    + getZooOverview() : String
+    + getAnimalInformation() : String
+    + getAnimalInformation() : String
+    + getAnimalInformationByType() : String
+    + getAllAnimalsInformation() : String
+    + getUsersName() : String
+    + getHungryAnimals() : List<Animal>
+    + getHungryAnimalInformation() : String
+    + feedHungryAnimals() : void
+    + updateUser() : void
+    + petAnimal() : boolean
+    + spendAnimalToken() : boolean
+    + removeAnimal() : boolean
 }
 
 class ZooFactory {
-    + {static} createAnimal(AnimalTypes, int)
-    - {static} populateAnimalTypes(Zoo)
-    - {static} populateAnimals(Zoo)
-    + {static} populateZoo(Zoo)
+    + {static} createAnimal() : void
+    - {static} populateAnimalTypes() : void
+    - {static} populateAnimals() : void
+    + {static} populateZoo() : void
 }
 
-Crocodile <|.. Animal
-Lion <|.. Animal
-Llama <|.. Animal
+'class Main
+'Main *-- Zoo
+'Main *-- Auth
+'Main *-- VisitorCommands
+'Main *-- ZooKeeperCommands
+'Main *-- AnimalCommands
+'Main *-- LoginCommands
 
-AnimalCommands <|.. Commands
-LoginCommands <|.. Commands
-VisitorCommands <|.. Commands
-ZooKeeperCommands <|.. Commands
+Auth -- LoginCommands
+Auth -- VisitorCommands
+Auth -- ZooKeeperCommands
+
+Zoo -- VisitorCommands
+Zoo -- ZooKeeperCommands
+Zoo -- AnimalCommands
+
+Crocodile <|-- Animal
+Lion <|-- Animal
+Llama <|-- Animal
+
+AnimalCommands <|-- Commands
+LoginCommands <|-- Commands
+VisitorCommands <|-- Commands
+ZooKeeperCommands <|-- Commands
 
 Visitor o-- Auth
 ZooKeeper o-- Auth
 AuthFactory -- Auth
 
-Visitor <|.. User
-ZooKeeper <|.. User
-
-Main *-- Zoo
-Main *-- Auth
-Main *-- VisitorCommands
-Main *-- ZooKeeperCommands
-Main *-- AnimalCommands
-Main *-- LoginCommands
+Visitor <|-- User
+ZooKeeper <|-- User
 
 User <|.. Searchable
 Animal <|.. Searchable

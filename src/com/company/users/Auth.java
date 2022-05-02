@@ -25,7 +25,10 @@ public class Auth {
         currentUser = null;
     }
 
-    private boolean logIn(String name, String password, List<User> users) {
+    public boolean logIn(UserTypes type, String name, String password) {
+
+        List<User> users = type == UserTypes.ZOOKEEPER ? zookeepers : visitors;
+
         for (User user : users) {
             if (user.authenticate(name, password)) {
                 currentUser = user;
@@ -34,14 +37,6 @@ public class Auth {
         }
 
         return false;
-    }
-
-    public boolean logInVisitor(String name, String password) {
-        return logIn(name, password, visitors);
-    }
-
-    public boolean logInZookeeper(String name, String password) {
-        return logIn(name, password, zookeepers);
     }
 
     public List<User> getVisitors() {
