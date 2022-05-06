@@ -11,10 +11,9 @@ public class ZookeeperCommands extends Commands {
     private final Auth authentication;
 
     public ZookeeperCommands(Zoo zoo, Auth authentication) {
-        super(new String[]{"See List of Hungry Animals", "Feed Animals", "Add Animal", "Remove Animal", "Search", "Log off"}, "Zookeeper");
+        super(new String[]{"See List of Hungry Animals", "Feed Animals", "Add Animal", "Remove Animal", "Search", "Sort animals by popularity", "Log off"}, "Zookeeper");
         this.zoo = zoo;
         this.authentication = authentication;
-
     }
 
     private void printHungryAnimals() {
@@ -93,12 +92,18 @@ public class ZookeeperCommands extends Commands {
                 removeAnimal();
             } else if (userSelection == 5) {
                 searchZoo();
+            } else if (userSelection == 6) {
+                printPopularAnimals();
             } else {
                 setNextCommands(CommandTypes.LOGIN);
                 authentication.logOut();
                 isActive = false;
             }
         }
+    }
+
+    private void printPopularAnimals() {
+        printMessage(zoo.getPopularAnimalInformation());
     }
 
 

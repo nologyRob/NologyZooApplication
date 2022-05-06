@@ -6,10 +6,7 @@ import com.company.users.Auth;
 import com.company.users.Visitor;
 
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 // TODO
@@ -165,6 +162,11 @@ public class Zoo {
     public String getHungryAnimalInformation() {
         List<Animal> hungryAnimals = getHungryAnimals();
         return getAnimalInformation(hungryAnimals);
+    }
+
+    public String getPopularAnimalInformation() {
+        Collections.sort(animals);
+        return getAllAnimalsInformation();
     }
 
     // --- UPDATE ---

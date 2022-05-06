@@ -6,7 +6,7 @@ import java.util.Locale;
 import java.util.UUID;
 
 
-public abstract class Animal implements Searchable {
+public abstract class Animal implements Searchable, Comparable<Animal> {
     private final String name;
     private final String id;
     private final String type;
@@ -19,7 +19,7 @@ public abstract class Animal implements Searchable {
         this.id = UUID.randomUUID().toString().substring(0, 5);
         this.type = type;
         this.hunger = (int) (Math.random() * 100 + 1);
-        this.popularity = 0;
+        this.popularity = (int) (Math.random() * 100 + 1);
         this.canPet = canPet;
     }
 
@@ -66,5 +66,14 @@ public abstract class Animal implements Searchable {
     }
 
     public abstract void makeSound();
+
+    protected int getPopularity() {
+        return this.popularity;
+    }
+
+    @Override
+    public int compareTo(Animal animal) {
+        return animal.getPopularity() - getPopularity();
+    }
 }
 
