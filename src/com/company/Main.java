@@ -1,5 +1,6 @@
 package com.company;
 
+import com.company.animals.Animal;
 import com.company.commands.*;
 import com.company.users.Auth;
 
@@ -10,6 +11,10 @@ public class Main {
     public static void main(String[] args) throws FileNotFoundException {
         Auth authentication = new Auth();
         Zoo zoo = new Zoo(authentication);
+
+        for(Animal animal: zoo){
+            System.out.println(animal.getInformation());
+        }
 
         Commands loginCommands = new LoginCommands(authentication);
         Commands visitorCommands = new VisitorCommands(zoo, authentication);

@@ -11,14 +11,8 @@ import java.util.stream.Collectors;
 
 // TODO
 // HASH SET -> USERNAMES?
-// ADD VISITORS IN ZOO FACTORY
 
-// REFACTOR LOGIN?
-// - NEW AUTH CLASS?
-// - AUTH USERS ZOO KEEPER
-
-
-public class Zoo {
+public class Zoo implements Iterable<Animal> {
 
     // NOT TIED TO A CONCRETE IMPLEMENTATION -> DEPENDENCY INVERSION
     private final List<Animal> animals;
@@ -120,7 +114,7 @@ public class Zoo {
         return animal.getInformation();
     }
 
-    public String getAnimalInformation(List<Animal> animals) {
+    private String getAnimalInformation(List<Animal> animals) {
         StringBuilder animalOverview = new StringBuilder();
 
         for (Animal animal : animals) {
@@ -227,4 +221,8 @@ public class Zoo {
         }
     }
 
+    @Override
+    public Iterator<Animal> iterator() {
+        return animals.iterator();
+    }
 }
